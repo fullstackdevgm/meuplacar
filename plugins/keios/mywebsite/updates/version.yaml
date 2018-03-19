@@ -1,0 +1,11 @@
+1.0.1: First version of MySocials
+1.0.2: Migration to MyWebsite, Variables added
+1.0.3: Cookie Warning added
+1.0.4: MyLocation integrated as MyMap
+1.0.5: Full translatibility added
+1.0.6: Icons and logos upload widgets
+1.0.7: All images are now uploadable
+1.0.8: Windows tile support added
+1.0.9:
+    - Tabs structure refactor
+    - Owl Address added for Map Location

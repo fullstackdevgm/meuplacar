@@ -1,0 +1,631 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Montserrat', sans-serif;
+    color: #000;
+}
+body {
+  font-size: 12px;
+  /*padding-top: 20px*/
+}
+.clear{
+	clear:both
+}
+.nopadding {
+	padding:0!important
+}
+.nopaddingright {
+	padding-right:0!important
+}
+.nopaddingleft {
+	padding-left:0!important
+}
+.nomargin{
+	margin:0!important
+}
+.nomarginlaterals {
+	margin-left:0!important;
+	margin-right:0!important
+}
+h1.title-site{
+	font-size: 50px;
+	font-weight: 700;
+	margin-right: 5px;
+	color: #000
+}
+h1.title-site + img{
+	margin-top: 26.5px;
+	width: 64px;
+	height: 53px;
+}
+#main-menu, .match-data .menu{
+	background-color: #ffcd1a;
+	height: 42px
+}
+#main-menu ul li, .match-data .menu ul li{
+ list-style: none;
+ width:10%;
+ height:42px;
+ padding-top: 10px;
+ float: left;
+ font-size:15px;
+ cursor: pointer;
+ text-align: center
+}
+#main-menu ul li.league{
+	width:18%;
+}
+#main-menu ul li.icon{
+	width:auto;
+	padding:10px;
+}
+#main-menu ul li.icon .fa{
+	font-size: 2.4em;
+    margin-top: -5.5px;
+}
+#main-menu ul li a, .match-data .menu ul li a {
+	color: inherit;
+	text-decoration:none
+}
+#main-menu ul li:hover, #main-menu ul li.active, .match-data .menu ul li:hover, .match-data .menu ul li.active{
+	background-color: #000;
+	font-weight: bold;
+	color: #fff
+}
+div.ads{
+	padding:10px 0 10px 0;
+}
+div.sidebar_box .title-box{
+	background-color: #ffcd1a;
+	color: #000;
+	padding: 2px;
+	padding-left: 5px;
+	margin-bottom: 6px;
+	font-weight: lighter
+}
+div.sidebar_box .content-box{
+	border: 1px solid #eeeeee;
+	min-height: 200px;
+	padding: 5px;
+	margin-bottom: 20px;
+}
+div.sidebar_box .content-box li{
+	list-style: none;
+}
+div.sidebar_banner{
+ margin-bottom: 20px;
+}
+.button{
+	border: 1px solid #eeeeee;
+	font-size: 14px;
+	text-align: center;
+	height: 30px;
+	padding: 4px 10px;
+	cursor: pointer;
+	margin-right: 3px;
+	background-color: transparent;
+}
+.button.day{
+	padding: 2px
+}
+input[type='text'].button{
+	width:62px;
+	cursor:pointer
+}
+.button-arrow{
+	font-size: 15px;
+}
+.button:hover{
+	border: 1px solid #ffcd1a;
+	background-color: #ffcd1a;
+}
+.menu-home .button.active{
+	border: 1px solid #ffcd1a;
+	background-color: #ffcd1a;
+}
+div.competition-title{
+	width: 100%;
+	background-color: #000;
+	color: #fff;
+	margin: 5px 0 5px 0;
+	padding: 4px;
+	padding-left: 10px
+}
+div.competition-title img, div.head2head img, div.player-lastest-games img:not(.loading){
+	width: 16px;
+	height: 13px
+}
+div.line-match .info, div.line-match .odds, .info span, div.match-data .info{
+	background-color: #eeeeee;
+	padding: 2px
+}
+div.line-match .info.video{
+	padding: 2px 3px;
+}
+div.line-match .space{
+	padding:2px
+}
+div.line-match .team-logo img{
+	width: 20px;
+	height: 20px
+}
+div.match-data img.team-logo{
+	width: 40px;
+	height: 40px
+}
+div.line-match {
+	font-size:13px;
+	margin-bottom: 4px;
+	cursor: pointer
+}
+div.line-match-logo-and-score{
+	margin:0 auto;
+}
+div.line-match:hover{
+	background-color: #eeeeee;
+}
+span.live-letter{
+	color: red;
+	background-color: #d9ead3
+}
+span.fineshed-letter{
+	font-size: 11px
+}
+div.team-logo-home{
+	margin-right: 15px
+}
+div.team-logo-away{
+	margin-left: 15px
+}
+.team-away-score, .team-home-score{
+	padding: 0px 8px!important;
+    margin-top: 1px;
+}
+.team-away-score.score-one, .team-home-score.score-one{
+	padding: 0px 10px!important;
+}
+a.no-link,a.no-link:hover{
+	color:inherit
+}
+#layout-content .modal-dialog {
+    width: 800px!important
+}
+#layout-content .modal-header {
+    padding: 6px 10px!important;
+    border:0!important
+}
+#layout-content .modal-body{
+	margin:0!important;
+}
+.match-data .time{
+	margin-top: 10px;
+	font-size:11.5px;
+	font-weight: lighter
+}
+.match-data .result.info{
+	padding: 2px 10px;
+    font-size: 18px;
+}
+.match-data .team-home-score {
+	margin-left: 10px
+}
+.match-data .team-away-score {
+	margin-right: 10px
+}
+.match-data .menu ul li {
+	width: auto;
+    height: 40px;
+    padding: 10px;
+    font-size: 12px
+}
+.match-data .menu {
+	height: 40px;
+}
+.match-data .menu-home {
+	margin-top:10px
+}
+.match-data .menu-home .button{
+	font-size:12px
+}
+div.match-data .competition-title{
+	font-size:13px
+}
+.match-details{
+	border: 2px solid #eeeeee;
+	border-top:0;
+}
+div.info.live-letter{
+	background-color: #d9ead3
+}
+.background-light-gray {
+	background-color: #f5f5f5;
+	border-bottom:2px solid #f5f5f5;
+	height:auto
+}
+span.letter-player_out_name{
+	opacity:0.5
+}
+.match-data .match-details img, .match-data .commentaries img, .table-player-subheader img{
+	height: 15px;
+	width: 15px;
+	margin-top: 2.5px
+}
+.match-data .commentaries img{
+	margin-right: 2px
+}
+.match-data .match-details img.yellowcard, .match-data .match-details img.redcard, .match-data .match-details img.yellowred, .table-player-subheader img.yellowcard, .table-player-subheader img.redcard, .table-player-subheader img.yellowred {
+	width: 13px!important;
+}
+.competition-title.first-time,.competition-title.second-time {
+	margin-bottom:0
+}
+.match-data .fa-caret-up{
+	color: #93c47d
+}
+.match-data .fa-caret-down{
+	color: #cc0000
+}
+.match-data .fa-2x {
+    font-size: 1.4em
+}
+.header-search{
+	margin-top: 50px
+}
+input.input-underline{
+	border: none;
+	outline: none;
+	width:90%;
+	border-bottom: 1px solid #000
+}
+a.competition-ranking{
+	margin-right:5px;
+	color:#fff;
+	text-decoration:underline
+}
+a.competition-ranking:hover{
+	text-decoration:none
+}
+span.red-card{
+	width:9px;
+	height:11px;
+	background-size: cover;
+    margin-top: 5px;
+	background-image: url('../images/red_card.png')
+}
+span.red-card.left{
+	margin-left:4px
+}
+span.red-card.right{
+	margin-right:4px
+}
+.match-data .match-details i.fa-warning{
+	margin-top: 4px;
+    color: red;
+    font-size: 13px;
+    margin-right: -5px;
+}
+.match-data .soccer-field{
+	margin-left: 15px;
+	width: 750px;
+  height: 488px;
+  background-size: cover;
+	background-size: cover;
+	background-image: url('../images/soccer_field.png?1')
+}
+.soccer-field .player {
+    position: absolute;
+    width: 120px;
+    height: 36px;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+.soccer-field .player.goalkeeper{
+    background-image: url('../images/dress-yellow.gif');
+}
+.soccer-field .player.line.home{
+    background-image: url('../images/dress-white.gif');
+}
+.soccer-field .player.line.away{
+    background-image: url('../images/dress-blue.gif');
+}
+.soccer-field .player.goalkeeper.home{
+    left: -29px;
+    top: 226.5px;
+}
+.soccer-field .player.goalkeeper.away{
+    right: -29px;
+    top: 226.5px;
+}
+.soccer-field .player.defense.home{
+    left: 48px;
+}
+.soccer-field .player.defense.away{
+    right: 48px;
+}
+.soccer-field .player.libero.home{
+    left: 110px;
+}
+.soccer-field .player.libero.away{
+    right: 110px;
+}
+.soccer-field .player.midfield.home{
+    left: 191px;
+}
+.soccer-field .player.midfield.away{
+    right: 191px;
+}
+.soccer-field .player.forward.home{
+    left: 270px;
+}
+.soccer-field .player.forward.away{
+    right: 270px;
+}
+.soccer-field .player_name{
+	position: absolute;
+	top: 31px;
+	width: 100%
+}
+.soccer-field .player_name div{
+	font-family: tahoma, verdana, arial;
+    font-size: 11px;
+    font-weight: normal;
+}
+.soccer-field .player_name div span{
+	background-color: #353535;
+    padding: 1px 3px;
+    white-space: nowrap;
+}
+.soccer-field .player_name div span a{
+	color: #fff
+}
+.soccer-field .shirt_number{
+	position: absolute;
+	top: 7px;
+	width: 100%;
+	font-family: tahoma, verdana, arial;
+	font-size: 11px;
+	font-weight: bold;
+	padding-left: 1px;
+	color: #353535
+}
+.competition-title .formation{
+	margin: 0 10px
+}
+.competition-title.line{
+    padding: 0px;
+    margin-top: 0;
+    height: 4px
+}
+.menu-home.match-tabs.stats-tabs .button.active, .menu-home.match-tabs.commentaries-tabs .button.active{
+	border: 1px solid #000;
+    background-color: #000;
+    color: #fff
+}
+.pre-footer{
+	margin: 0
+}
+.pre-footer div {
+	height:250px;
+	background-color: #d9d9d9
+}
+.pre-footer div.center{
+	margin:0 2px;
+	width: 32.9%
+}
+div.match-stats > div:nth-of-type(odd), div.classification-list > div:nth-of-type(odd), div.team-headlines > div:nth-of-type(odd), div.head2head > div:nth-of-type(odd), div.commentaries > div:nth-of-type(odd), div.odds-lines > div:nth-of-type(odd), div.player-lastest-games > div:nth-of-type(odd), div.team-player-list > div:nth-of-type(odd) {
+    background-color: #f5f5f5
+}
+div.match-stats > div, div.commentaries > div, div.odds-lines {
+	border-bottom: 1px solid #E0E0E0;
+	padding: 4px
+}
+div.match-stats div div.title{
+	border-left: 2px solid #E0E0E0;
+	border-right: 2px solid #E0E0E0
+}
+div.match-stats  div.percent-bar {
+	height:12px;
+	margin-top: 3px
+}
+.percent-bar.red{
+	background-color: #CA0000
+}
+.percent-bar.gray{
+	background-color: #595959
+}
+.percent-bar.transparent{
+	background-color: transparent
+	border: 1px solid #E0E0E0
+}
+div.classification-th > div > div.totals{
+	border-right: 1px solid #eeeeee
+}
+div.classification-th > div > div.totals.first{
+	border-left: 1px solid #eeeeee
+}
+.nopadding_paddingleft10{
+	padding:0;
+	padding-left: 10px
+}
+.nopadding_paddingleft5{
+	padding:0;
+	padding-left: 5px
+}
+div.classification-list, div#body-competition-page .next-matches .end, div.head2head .end, div.player-lastest-games .end, .col-xs-12.line {
+	border-top:0;
+	border-bottom: 2px solid #333
+}
+div.classification-list img{
+	width: 15px;
+	height: 15px
+}
+div.classification-list .result, div.head2head .result, div.player-lastest-games .result{
+    border-radius: 2px;
+    padding: 2px 6px;
+    font-weight: bold;
+    margin-right: 6px;
+    color: #fff;
+    height: 20px;
+    margin-top: 2px;
+    width:30px;
+    font-size: 11px
+}
+div.head2head .result, div.player-lastest-games .result {
+	width:20px;
+}
+.result.win{
+ 	background-color: green
+ }
+.result.loss{
+ 	background-color: red
+ }
+.result.draw{
+ 	background-color: orange
+ }
+.totals.forced_center{
+ 	padding-left: 9px!important;
+ }
+ div.classification-list .end, div.head2head .end, div.player-lastest-games .end,  div#body-competition-page .next-matches .end, .col-xs-12.line{
+ 	height:4px
+ }
+.imgH1{
+	height: 70px;
+	width: 104px;
+	border: 1px solid #eee;
+    border-radius: 8px
+}
+.sub-header{
+	margin-bottom:20px
+}
+.sidebar_box .content-box li.link{
+	padding-bottom: 2.5px;
+	border-bottom: 1px solid #eeeeee;
+	margin-bottom: 4px
+}
+.sidebar_box .content-box li.link:hover{
+	background-color: #eeeeee;
+}
+.sidebar_box .content-box img{
+	width: 20px;
+	height: 17px;
+	border-radius: 2px;
+	border: 1px solid #eee
+}
+.sidebar_box .content-box a{
+	color: inherit;
+	text-decoration: none
+}
+.sidebar_box .content-box img.team-logo{
+	width: 22px;
+	height: 22px;
+	border:0;
+	border-radius:0
+}
+.sidebar_box .content-box img.team-logo.small{
+	width: 18px;
+	height: 18px;
+	margin-right: 6px
+}
+.border-iframe{
+	border: 3px solid #04070a;
+	border-radius: 3px
+}
+.competition-title.line-space{
+	background: transparent;
+	height: 16.5px
+}
+.iframeBlocker{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer
+}
+a[data-lity][data-index]{
+	color: inherit
+}
+img.bookmaker-logo{
+	width: 100px;
+	height: 20px
+}
+.odds-sort-icon .fa-sort-asc{
+	padding-top: 8px!important;
+}
+.odds-sort-icon  i{
+	cursor: pointer
+}
+.div-line-bookmakers{
+	padding: 5px 0;
+}
+.player-header{
+	border-radius: 5px;
+    background-color: #e0e0e0;
+    padding: 10px 0!important
+}
+.table-player-subheader{
+	background-color: #414141;
+  border-top: 1px solid #bcbeae;
+}
+.team-players-subheader{
+  background-color: #000;
+  color: #fff;
+  border: 0
+}
+h1.player{
+	font-size: 25px
+}
+img.imgH1player {
+	width: 80px;
+    height: 80px;
+    border: 1px solid #d0d0d0;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.player-data {
+	margin-left: -15px
+}
+.table-player-subheader .row.nomarginlaterals{
+  padding: 2px 0
+}
+.table-player-subheader .fa-share {
+  font-size: 1em;
+  color: #e2e2e2
+}
+.link-inherit{
+  color: inherit!important
+}
+h1.team{
+  font-size: 31px;
+  margin-bottom: 10px !important
+}
+h1.team + i {
+  font-size: 1.5em;
+  color: #0084b4
+}
+.imgH1player.team{
+  padding: 2px
+}
+.header-team {
+  margin-left: -30px
+}
+.positions-row{
+  background-color: #CACACA!important;
+  border: 1px solid #BBB;
+  color: #000;
+  font-weight: bold
+}
+.player-fullname img{
+  width: 16px;
+  margin: 0 8px 0 0;
+  height: 13px
+}
+footer.text-center{
+  text-align: center
+}
+#layout-content .content-window{
+  margin-top: 10px
+}

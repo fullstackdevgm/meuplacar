@@ -1,0 +1,122 @@
+title = "Página de Jogador"
+url = "/jogador/:name/:id"
+layout = "default"
+==
+<?php
+
+function onStart()
+{
+	$player = Soccerama::players()->byId($this->param('id'),['0'=>'team','1'=>'position']);
+	if($player->birth_date) {
+		$birth_date = explode('-',$player->birth_date);
+		$born_date = $birth_date[2].'/'.$birth_date[1].'/'.$birth_date[0];
+
+		$today = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+		$born = mktime( 0, 0, 0, $birth_date[1], $birth_date[2], $birth_date[0]);
+
+		$age = floor((((($today - $born) / 60) / 60) / 24) / 365.25);
+	} else {
+		$born_date = "No Data";
+		$age = "No Data";
+	}
+
+	//JS
+	$this->addJs('/themes/website/assets/javascript/player.js?1');
+
+	//Vars
+	$this['player'] = $player;
+	$this['player_born_date'] = $born_date;
+	$this['player_age']  = $age;
+}
+
+function onLoadLastestGames()
+{
+		$id = post('id');
+		$player = Soccerama::players()->byId($id,['0'=>'lineups']);
+		$last_lineups = array_slice(array_reverse($player->lineups->lineups),15,15);
+		$matches_data = array();
+		foreach($last_lineups as $lineups){
+		try {
+			$match = Soccerama::matches()->byId($lineups->match_id,['0'=>'competition',1=>'homeTeam',2=>'awayTeam']);
+			if($match->status == 'FT'){
+				$competition = Soccerama::competitions()->byId($match->competition_id,['0'=>'country']);
+				$date = explode('-',$match->starting_date);
+				$date = $date[2].'.'.$date[1].'.'.$date[0];
+				$scoreboard = str_replace('-',' : ',$match->ft_score);
+				if($match->home_score > $match->away_score) $winner_initials = 'H';
+				else if($match->away_score > $match->home_score) $winner_initials = 'A';
+				else $winner_initials = 'E';
+				if($lineups->type != 'substitution') $time_in_field = "90'";
+				else $time_in_field = "0'";
+				$matches_data[] = array(
+						'competition_name' => $match->competition->name,
+						'competition_country_flag' => $competition->country->flag,
+						'competition_country_name' => $competition->country->name,
+						'home_team_name' => $match->homeTeam->name,
+						'away_team_name' => $match->awayTeam->name,
+						'date' => $date,
+						'scoreboard' => $scoreboard,
+						'winner_initials' => $winner_initials,
+						'assists' => $lineups->assists,
+						'goals' => $lineups->goals,
+						'yellowcards' => $lineups->yellowcards,
+						'redcards' => $lineups->redcards
+				);
+			}
+		} catch (Exception $e) {
+			continue;
+		}
+		}
+		$this['matches'] = $matches_data;
+}
+
+?>
+==
+{% set positions = {'Goalkeeper':'Goleiro','Defender':'Defensor','CD-L':'Defensor','CD-R':'Defensor','RB':'Defensor','LB':'Defensor','Midfielder':'Meio-Campo','AM':'Meio-Campo','LM':'Meio-Campo','RM':'Meio-Campo','CM-L':'Meio-Campo','CM-R':'Meio-Campo','CM':'Meio-Campo','A':'Atacante','CF-L':'Atacante','CF-R':'Atacante','CF':'Atacante','LF':'Atacante','RF':'Atacante','Forward':'Atacante'} %}
+<div class="row nopadding">
+	<div class="col-xs-12 sub-header">
+		<div class="col-xs-12">
+			<div class="row nopadding player-header">
+				<div class="col-xs-2 nopaddingright text-left">
+					<img class="imgH1player" src="{{player.photo}}" />
+				</div>
+				<div class="col-xs-8 text-left nopaddingleft player-data">
+					<h1 class="player nomargin">{{player.name}} ({{player.team.name}})</h1>
+					<h6 class="nomargin">{{player.nationality}}<br/>Idade: {{player_age}} ({{player_born_date}})<br />{{player.position.name|replace(positions)}}</h4>
+				</div>
+				<div class="col-xs-2 nopaddingright text-right">
+					<img class="imgH1player" src="{{player.team.logo}}" title="{{player.team.name}}" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row nopadding">
+	<div><br /></div>
+	<div id="body-player-page" class="col-xs-12 text-center">
+		<div class="row">
+			<div class="col-xs-12 menu-home match-tabs stats-tabs">
+				<div class="button pull-left match active">Últimos jogos</div>
+			</div>
+		</div>
+		<div class="competition-title line nomargin">&nbsp;</div>
+		<div class="row nomargin">
+			<div class="col-xs-12 nopadding table-player-subheader">
+				<div class="row nomarginlaterals">
+					<div class="col-xs-9 text-left nopadding"></div>
+					<div class="col-xs-3 nopadding">
+						<div class="col-xs-3 text-center nopadding" title="Assistências"><i class="fa fa-share"></i></div>
+						<div class="col-xs-3 text-center nopadding" title="Gols"><img src="{{ 'assets/images/goal.png'|theme }}" /></div>
+						<div class="col-xs-3 text-center nopaddingt" title="Cartões Amarelos"><img class="yellowcard" src="{{ 'assets/images/yellow_card.png'|theme }}" /></div>
+						<div class="col-xs-3 text-center nopadding" title="Cartões vermelhos"><img class="redcard" src="{{ 'assets/images/red_card.png'|theme }}" /></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row nomargin">
+			<div id="player-lastest-games" class="col-xs-12 nopadding player-lastest-games" data-player-id="{{player.id}}">
+				<img class="loading" src="{{asset('themes/website/assets/images/loading.svg')}}" />
+			</div>
+		</div>
+	</div>
+</div>

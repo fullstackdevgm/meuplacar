@@ -1,0 +1,57 @@
+<!-- meta partial to use freely -->
+
+<meta charset="{{ website_charset }}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ this.page.title }} | {{ website_title }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{{ website_description }}"/>
+<meta name="keywords" content="{{ website_keywords }}"/>
+<meta name="author" content=""/>
+
+{% if website_icon.path %}
+<link rel="icon" href="{{ website_icon.path }}" type="image/png">
+<link rel="apple-touch-icon" href="{{ website_icon.path }}"/>
+<link rel="apple-touch-icon" sizes="72x72" href="{{ website_icon.thumb(72,72) }}"/>
+<link rel="apple-touch-icon" sizes="114x114" href="{{ website_icon.thumb(114,114) }}"/>
+<link rel="apple-touch-icon" sizes="144x144" href="{{ website_icon.thumb(144,144) }}"/>
+{% endif %}
+
+<meta name="robots" content="{{ website_robots }}">
+<meta name="revisit-after" content="{{ website_revisit }}">
+
+<meta property="og:title" content="{{ this.page.title }} | {{ default_og_title }}">
+<meta property="og:description" content="{{ default_og_description }}">
+<meta property="og:url" content="{{ website_domain }}"/>
+<meta property="og:type" content="{{ default_og_type }}">
+<meta property="og:site_name" content="{{ website_title }}">
+{% if default_og_image.path %}
+<meta property="og:image" content="{{ default_og_image.path }}">
+{% endif %}
+
+<meta name="twitter:title" content="{{ this.page.title }} | {{ default_twitter_title }}">
+<meta name="twitter:description" content="{{ default_twitter_description }}">
+<meta name="twitter:card" content="{{ twitter_card }}">
+<meta name="twitter:site" content="@{{ my_twitter }}">
+<meta name="twitter:creator" content="">
+{% if default_twitter_image.path %}
+<meta name="twitter:image" content="{{ default_twitter_image.path }}">
+{% endif %}
+
+<meta name="application-name" content="{{ default_tile_title }}"/>
+<meta name="msapplication-TileColor" content="{{ default_tile_background }}"/>
+{% if windows_image.path %}
+<meta name="msapplication-square70x70logo" content="{{ windows_image.thumb(70,70) }}"/>
+<meta name="msapplication-square150x150logo" content="{{ windows_image.thumb(150,150) }}"/>
+<meta name="msapplication-wide310x150logo" content="{{ windows_image.thumb(310,150) }}"/>
+<meta name="msapplication-square310x310logo" content="{{ windows_image.path }}"/>
+{% endif %}
+
+{% if default_tile_rss_feed %}
+<meta name="msapplication-notification" content="frequency=30;
+polling-uri=http://notifications.buildmypinnedsite.com/?feed={{ default_tile_rss_feed }}&amp;
+id=1;polling-uri2=http://notifications.buildmypinnedsite.com/?feed={{ default_tile_rss_feed }}&amp;
+id=2;polling-uri3=http://notifications.buildmypinnedsite.com/?feed={{ default_tile_rss_feed }}&amp;
+id=3;polling-uri4=http://notifications.buildmypinnedsite.com/?feed={{ default_tile_rss_feed }}&amp;
+id=4;polling-uri5=http://notifications.buildmypinnedsite.com/?feed={{ default_tile_rss_feed }}&amp;id=5;
+ cycle=1"/>
+{% endif %}

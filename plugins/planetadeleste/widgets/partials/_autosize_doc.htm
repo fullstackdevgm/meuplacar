@@ -1,0 +1,7 @@
+<?php
+$this->addJs('/modules/system/assets/js/updates/details.js', 'core');
+$this->addCss('/modules/system/assets/css/updates/details.css', 'core');
+?>
+<div class="plugin-details-content">
+    <?= Markdown::parse( file_get_contents(plugins_path('planetadeleste/widgets/partials/autosize.md')) ); ?>
+</div>

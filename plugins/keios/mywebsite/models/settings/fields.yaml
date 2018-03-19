@@ -1,0 +1,417 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+tabs:
+    fields:
+
+        # First Tab - Website Information
+        website_section:
+            type: section
+            label: keios.mywebsite::lang.keys.website_info
+            comment: keios.mywebsite::lang.keys.website_info_desc
+            tab: keios.mywebsite::lang.keys.website_information
+        website_charset:
+            label: keios.mywebsite::lang.keys.website_charset
+            comment: keios.mywebsite::lang.keys.website_charset_desc
+            tab: keios.mywebsite::lang.keys.website_information
+            span: left
+            default: utf-8
+        website_domain:
+            label: keios.mywebsite::lang.keys.website_domain
+            comment: keios.mywebsite::lang.keys.website_domain_desc
+            tab: keios.mywebsite::lang.keys.website_information
+            span: right
+        website_title:
+            label: keios.mywebsite::lang.keys.website_title
+            comment: keios.mywebsite::lang.keys.website_title_desc
+            tab: keios.mywebsite::lang.keys.website_information
+        website_description:
+            label: keios.mywebsite::lang.keys.website_description
+            comment: keios.mywebsite::lang.keys.website_description_desc
+            tab: keios.mywebsite::lang.keys.website_information
+        website_keywords:
+            label: keios.mywebsite::lang.keys.website_keywords
+            comment: keios.mywebsite::lang.keys.website_keywords_desc
+            tab: keios.mywebsite::lang.keys.website_information
+        website_robots:
+            label: keios.mywebsite::lang.keys.website_robots
+            comment: keios.mywebsite::lang.keys.website_robots_desc
+            tab: keios.mywebsite::lang.keys.website_information
+            default: noindex,nofollow
+            span: left
+        website_revisit:
+            label: keios.mywebsite::lang.keys.website_revisit
+            comment: keios.mywebsite::lang.keys.website_revisit_desc
+            tab: keios.mywebsite::lang.keys.website_information
+            default: 7 days
+            span: right
+        website_icon:
+            type: fileupload
+            mode: image
+            label: keios.mywebsite::lang.keys.website_favico
+            tab: keios.mywebsite::lang.keys.website_information
+            span: left
+            imageHeight: 144
+            imageWidth: 144
+        website_logo:
+            type: fileupload
+            mode: image
+            span: right
+            label: keios.mywebsite::lang.keys.website_logo
+            tab: keios.mywebsite::lang.keys.website_information
+
+        # Second tab - Contact Information
+
+        contact_data_section:
+            type: section
+            label: keios.mywebsite::lang.keys.contact_data_info
+            comment: keios.mywebsite::lang.keys.contact_data_info_desc
+            tab: keios.mywebsite::lang.keys.contact_data
+        company_name:
+            label: keios.mywebsite::lang.keys.company_name
+            tab: keios.mywebsite::lang.keys.contact_data
+        company_street:
+            label: keios.mywebsite::lang.keys.company_street
+            tab: keios.mywebsite::lang.keys.contact_data
+        company_zip:
+            label: keios.mywebsite::lang.keys.company_zip
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: left
+        company_city:
+            label: keios.mywebsite::lang.keys.company_city
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: right
+        company_country:
+            label: keios.mywebsite::lang.keys.company_country
+            tab: keios.mywebsite::lang.keys.contact_data
+        company_vat:
+            label: keios.mywebsite::lang.keys.company_vat
+            tab: keios.mywebsite::lang.keys.contact_data
+
+        more_emails:
+            span: left
+            label: keios.mywebsite::lang.keys.additional_emails
+            tab: keios.mywebsite::lang.keys.contact_data
+            type: switch
+        more_phones:
+            span: right
+            label: keios.mywebsite::lang.keys.additional_phones
+            tab: keios.mywebsite::lang.keys.contact_data
+            type: switch
+        email:
+            span: left
+            label: keios.mywebsite::lang.keys.email
+            tab: keios.mywebsite::lang.keys.contact_data
+        phone:
+            span: right
+            label: keios.mywebsite::lang.keys.phone
+            tab: keios.mywebsite::lang.keys.contact_data
+        email2:
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: left
+            label: keios.mywebsite::lang.keys.email2
+            trigger:
+                action: show
+                field: more_emails
+                condition: checked
+        email3:
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: right
+            label: keios.mywebsite::lang.keys.email3
+            trigger:
+                action: show
+                field: more_emails
+                condition: checked
+        email4:
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: left
+            label: keios.mywebsite::lang.keys.email4
+            trigger:
+                action: show
+                field: more_emails
+                condition: checked
+        email5:
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: right
+            label: keios.mywebsite::lang.keys.email5
+            trigger:
+                action: show
+                field: more_emails
+                condition: checked
+                email2:
+        phone2:
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: left
+            label: keios.mywebsite::lang.keys.phone3
+            trigger:
+                action: show
+                field: more_phones
+                condition: checked
+        phone3:
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: right
+            label: keios.mywebsite::lang.keys.phone4
+            trigger:
+                action: show
+                field: more_phones
+                condition: checked
+        phone4:
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: left
+            label: keios.mywebsite::lang.keys.phone5
+            trigger:
+                action: show
+                field: more_phones
+                condition: checked
+        phone5:
+            tab: keios.mywebsite::lang.keys.contact_data
+            span: right
+            label: keios.mywebsite::lang.keys.phone6
+            trigger:
+                action: show
+                field: more_phones
+                condition: checked
+        skype:
+            label: keios.mywebsite::lang.keys.skype
+            tab: keios.mywebsite::lang.keys.contact_data
+
+        # Third Tab - MyMap
+
+        map_settings_section:
+            type: section
+            label: keios.mywebsite::lang.keys.map_settings
+            comment: keios.mywebsite::lang.keys.map_settings_desc
+            tab: keios.mywebsite::lang.keys.my_location
+        location:
+            label: keios.mywebsite::lang.keys.current_location
+            disabled: false
+            type: owl-address
+            comment: keios.mywebsite::lang.keys.google_maps_query
+            tab: keios.mywebsite::lang.keys.my_location
+        google_key:
+            label: keios.mywebsite::lang.keys.google_api_key
+            comment: keios.mywebsite::lang.keys.google_api_key_desc
+            tab: keios.mywebsite::lang.keys.my_location
+        layout_section:
+            type: section
+            label: keios.mywebsite::lang.keys.map_layout
+            comment: keios.mywebsite::lang.keys.map_layout_desc
+            tab: keios.mywebsite::lang.keys.my_location
+        map_width:
+            default: '100%'
+            label: keios.mywebsite::lang.keys.map_width
+            span: left
+            tab: keios.mywebsite::lang.keys.my_location
+        map_height:
+            default: '300px'
+            label: keios.mywebsite::lang.keys.map_height
+            span: right
+            tab: keios.mywebsite::lang.keys.my_location
+        map_container_class:
+            default: 'maps-default'
+            label: keios.mywebsite::lang.keys.wrapper_css
+            span: left
+            tab: keios.mywebsite::lang.keys.my_location
+        map_frameborder:
+            default: '0'
+            label: keios.mywebsite::lang.keys.frameborder
+            span: right
+            tab: keios.mywebsite::lang.keys.my_location
+        map_style:
+            default: 'border: 0px;'
+            label: keios.mywebsite::lang.keys.inline_css
+            tab: keios.mywebsite::lang.keys.my_location
+
+        # Fourth Tab - Facebook
+
+        facebook_section:
+            type: section
+            label: keios.mywebsite::lang.keys.facebook_info
+            comment: keios.mywebsite::lang.keys.facebook_info_desc
+            tab: keios.mywebsite::lang.keys.facebook
+        facebook:
+            label: keios.mywebsite::lang.keys.facebook
+            comment: keios.mywebsite::lang.keys.facebook_desc
+            tab: keios.mywebsite::lang.keys.facebook
+        default_og_title:
+            label: keios.mywebsite::lang.keys.default_og_title
+            comment: keios.mywebsite::lang.keys.default_og_title_desc
+            tab: keios.mywebsite::lang.keys.facebook
+        default_og_description:
+            label: keios.mywebsite::lang.keys.default_og_description
+            comment: keios.mywebsite::lang.keys.default_og_description_desc
+            tab: keios.mywebsite::lang.keys.facebook
+        default_og_type:
+            label: keios.mywebsite::lang.keys.default_og_type
+            comment: keios.mywebsite::lang.keys.default_og_type_desc
+            default: website
+            tab: keios.mywebsite::lang.keys.facebook
+        og_image:
+            type: fileupload
+            mode: image
+            span: left
+            label: keios.mywebsite::lang.keys.default_og_image
+            comment: keios.mywebsite::lang.keys.default_og_image_desc
+            tab: keios.mywebsite::lang.keys.facebook
+
+        # Fifth Tab - Twitter
+
+        twitter_section:
+            type: section
+            label: keios.mywebsite::lang.keys.twitter_info
+            comment: keios.mywebsite::lang.keys.twitter_info_desc
+            tab: keios.mywebsite::lang.keys.twitter
+        twitter:
+            label: keios.mywebsite::lang.keys.twitter
+            comment: keios.mywebsite::lang.keys.twitter_desc
+            tab: keios.mywebsite::lang.keys.twitter
+        default_twitter_title:
+            label: keios.mywebsite::lang.keys.default_twitter_title
+            comment: keios.mywebsite::lang.keys.default_twitter_title_desc
+            tab: keios.mywebsite::lang.keys.twitter
+        default_twitter_description:
+            label: keios.mywebsite::lang.keys.default_twitter_description
+            comment: keios.mywebsite::lang.keys.default_twitter_description_desc
+            tab: keios.mywebsite::lang.keys.twitter
+        twitter_card:
+            type: dropdown
+            options:
+                summary: summary
+                summary_large_image: summary_large_image
+                app: app
+                player: player
+            label: keios.mywebsite::lang.keys.twitter_card
+            comment: keios.mywebsite::lang.keys.twitter_card_desc
+            tab: keios.mywebsite::lang.keys.twitter
+        twitter_player:
+            span: left
+            tab: keios.mywebsite::lang.keys.twitter
+            label: keios.mywebsite::lang.keys.twitter_player
+            comment: keios.mywebsite::lang.keys.twitter_player_desc
+            trigger:
+                action: show
+                field: twitter_card
+                condition: value[player]
+        twitter_player_stream:
+            span: right
+            tab: keios.mywebsite::lang.keys.twitter
+            label: keios.mywebsite::lang.keys.twitter_player_stream
+            comment: keios.mywebsite::lang.keys.twitter_player_stream_desc
+            trigger:
+                action: show
+                field: twitter_card
+                condition: value[player]
+        twitter_player_width:
+            span: left
+            tab: keios.mywebsite::lang.keys.twitter
+            label: keios.mywebsite::lang.keys.twitter_player_width
+            comment: keios.mywebsite::lang.keys.twitter_player_width_desc
+            trigger:
+                action: show
+                field: twitter_card
+                condition: value[player]
+        twitter_player_height:
+            span: right
+            tab: keios.mywebsite::lang.keys.twitter
+            label: keios.mywebsite::lang.keys.twitter_player_height
+            comment: keios.mywebsite::lang.keys.twitter_player_height_desc
+            trigger:
+                action: show
+                field: twitter_card
+                condition: value[player]
+        twitter_player_stream_content_type:
+            span: left
+            tab: keios.mywebsite::lang.keys.twitter
+            label: keios.mywebsite::lang.keys.twitter_player_stream_content_type
+            comment: keios.mywebsite::lang.keys.twitter_player_stream_content_type_desc
+            trigger:
+                action: show
+                field: twitter_card
+                condition: value[player]
+        twitter_image:
+            type: fileupload
+            mode: image
+            span: left
+            label: keios.mywebsite::lang.keys.default_twitter_image
+            comment: keios.mywebsite::lang.keys.default_twitter_image_desc
+            tab: keios.mywebsite::lang.keys.twitter
+
+        # Sixth Tab - Windows Tiles
+
+        microsoft_section:
+            type: section
+            label: keios.mywebsite::lang.keys.microsoft_info
+            comment: keios.mywebsite::lang.keys.microsoft_info_desc
+            tab: keios.mywebsite::lang.keys.microsoft
+        default_tile_title:
+            label: keios.mywebsite::lang.keys.default_tile_title
+            comment: keios.mywebsite::lang.keys.default_tile_title_comment
+            tab: keios.mywebsite::lang.keys.microsoft
+        default_tile_background:
+            label: keios.mywebsite::lang.keys.default_tile_background
+            tab: keios.mywebsite::lang.keys.microsoft
+            type: colorpicker
+        default_tile_rss_feed:
+            label: keios.mywebsite::lang.keys.default_tile_rss_feed
+            comment: keios.mywebsite::lang.keys.default_tile_rss_feed_comment
+            tab: keios.mywebsite::lang.keys.microsoft
+        windows_image:
+            type: fileupload
+            mode: image
+            label: keios.mywebsite::lang.keys.default_tile_image
+            comment: keios.mywebsite::lang.keys.default_tile_image_comment
+            tab: keios.mywebsite::lang.keys.microsoft
+            imageHeight: 588
+            imageWidth: 588
+        windows_horizontal_image:
+            type: fileupload
+            mode: image
+            label: keios.mywebsite::lang.keys.default_horizontal_image
+            comment: keios.mywebsite::lang.keys.default_horizontal_image_comment
+            tab: keios.mywebsite::lang.keys.microsoft
+            imageWidth: 588
+            imageHeight: 270
+
+        # Seventh Tab - Other Social Media
+
+        socialmedia_section:
+            type: section
+            label: keios.mywebsite::lang.keys.other_social_media_info
+            comment: keios.mywebsite::lang.keys.other_social_media_info_desc
+            tab: keios.mywebsite::lang.keys.other_social_media
+        googleplus:
+            span: left
+            label: keios.mywebsite::lang.keys.google_plus
+            comment: keios.mywebsite::lang.keys.google_plus_desc
+            tab: keios.mywebsite::lang.keys.other_social_media
+        googleplus_alias:
+            span: right
+            label: keios.mywebsite::lang.keys.google_plus_alias
+            comment: keios.mywebsite::lang.keys.google_plus_alias_desc
+            tab: keios.mywebsite::lang.keys.other_social_media
+        youtube:
+            label: keios.mywebsite::lang.keys.youtube
+            comment: keios.mywebsite::lang.keys.youtube_desc
+            tab: keios.mywebsite::lang.keys.other_social_media
+        linkedin:
+            label: keios.mywebsite::lang.keys.linkedin
+            comment: keios.mywebsite::lang.keys.linkedin_desc
+            tab: keios.mywebsite::lang.keys.other_social_media
+        reddit:
+            label: keios.mywebsite::lang.keys.reddit
+            comment: keios.mywebsite::lang.keys.reddit_desc
+            tab: keios.mywebsite::lang.keys.other_social_media
+        dribble:
+            label: keios.mywebsite::lang.keys.dribble
+            comment: keios.mywebsite::lang.keys.dribble_desc
+            tab: keios.mywebsite::lang.keys.other_social_media
+        tumblr:
+            span: left
+            label: keios.mywebsite::lang.keys.tumblr
+            comment: keios.mywebsite::lang.keys.tumblr_desc
+            tab: keios.mywebsite::lang.keys.other_social_media
+        tumblr_alias:
+            span: right
+            label: keios.mywebsite::lang.keys.tumblr_alias
+            comment: keios.mywebsite::lang.keys.tubmlr_alias_desc
+            tab: keios.mywebsite::lang.keys.other_social_media

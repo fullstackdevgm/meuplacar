@@ -1,0 +1,106 @@
+<div class="row">
+	<div class="container-fluid">
+	{% if odds|length > 0 %}
+		<div class="row">
+			<div class="col-xs-12 menu-home match-tabs stats-tabs">
+				<div class="button odds pull-left active" data-type="1x2">1x2</div>
+				<div class="button odds pull-left" data-type="Home/Away" title="Casa/Fora">Casa/Fora</div>
+				<div class="button odds pull-left" data-type="HT/FT Double" title="Intervalo/Final de Jogo Double">HT/FT</div>
+				<div class="button odds pull-left" data-type="Double Chance" title="Double Chance">DC</div>
+				<div class="button odds pull-left" data-type="Both Teams to Score" title="Ambos Marcam">AM</div>
+			</div>
+		</div>
+		<div class="row competition-title">
+			<div class="col-xs-4 nopaddingleft">
+				<div class="col-xs-7 nopadding text-left">Casas de Apostas</div>
+				<div class="col-xs-5 nopadding text-left odds-sort-icon"><i class="fa fa-sort-asc"></i></div>
+			</div>
+			<div class="col-xs-2 nopadding" data-type="1x2">1</div>
+			<div class="col-xs-2 nopadding" data-type="1x2">X</div>
+			<div class="col-xs-2 nopadding" data-type="1x2">2</div>
+			<div class="col-xs-3 nopadding hide" data-type="Home/Away">1</div>
+			<div class="col-xs-3 nopadding hide" data-type="Home/Away">2</div>
+			<div class="col-xs-2 nopadding hide" data-type="HT/FT Double">{{match.homeTeam.name}}/{{match.homeTeam.name}}</div>
+			<div class="col-xs-2 nopadding hide" data-type="HT/FT Double">{{match.awayTeam.name}}/{{match.awayTeam.name}}</div>
+			<div class="col-xs-2 nopadding hide" data-type="HT/FT Double">{{match.homeTeam.name}}/{{match.awayTeam.name}}</div>
+			<div class="col-xs-2 nopadding hide" data-type="HT/FT Double">{{match.awayTeam.name}}/{{match.homeTeam.name}}</div>
+			<div class="col-xs-2 nopadding hide" data-type="Double Chance">1X</div>
+			<div class="col-xs-2 nopadding hide" data-type="Double Chance">12</div>
+			<div class="col-xs-2 nopadding hide" data-type="Double Chance">X2</div>
+			<div class="col-xs-3 nopadding hide" data-type="Both Teams to Score">Sim</div>
+			<div class="col-xs-3 nopadding hide" data-type="Both Teams to Score">Não</div>
+			<div class="col-xs-2 nopaddingright" data-type="bonus">Bônus</div>
+		</div>
+		<div class="row nomarginlaterals">
+			<div class="col-xs-12 odds-lines nopadding">
+				{% for odd in odds %}
+					{% set img_src = 'assets/images/odds-sites/img.png'|theme %}
+					{% set img_src = img_src|replace({'img':odd.name}) %}
+					{% for type in odd.types.data %}
+						{% if type.type == '1x2' or type.type == 'Home/Away' or type.type == 'HT/FT Double' or type.type == 'Double Chance' or type.type == 'Both Teams to Score' %}
+						<div class="row nomarginlaterals div-line-bookmakers {% if type.type != '1x2' %}hide{% endif %}" data-type="{{type.type}}">
+							<div class="col-xs-4 nopaddingleft">
+								<div class="col-xs-6 nopaddingleft"><img src="{{img_src|replace({' ':'_'})}}" class="bookmaker-logo" /></div>
+								<div class="col-xs-6 nopadding text-left"><big>{{odd.name}}</big></div>
+							</div>
+							{% if type.type == '1x2' %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == '1' %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == 'X' %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == '2' %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+							{% elseif type.type == 'Home/Away' %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == '1' %}<div class="col-xs-3 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == '2' %}<div class="col-xs-3 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+							{% elseif type.type == 'HT/FT Double' %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == match.homeTeam.name~'/'~match.homeTeam.name %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == match.awayTeam.name~'/'~match.awayTeam.name %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == match.homeTeam.name~'/'~match.awayTeam.name %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == match.awayTeam.name~'/'~match.homeTeam.name %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+							{% elseif type.type == 'Double Chance' %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == '1X' %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == '12' %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == 'X2' %}<div class="col-xs-2 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+							{% elseif type.type == 'Both Teams to Score' %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == 'No' %}<div class="col-xs-3 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+								{% for type_data in type.odds.data %}
+									{% if type_data.label == 'Yes' %}<div class="col-xs-3 nopadding">{{type_data.value}}</div>{% endif %}
+								{% endfor %}
+							{% endif %}
+							<div class="col-xs-2 nopaddingright" data-type="bonus">-</div>
+						</div>
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+			</div>
+		</div>
+		<div class="competition-title line nomargin">&nbsp;</div>
+	{% else %}
+		<div class="row text-center"><br /><br />Não há odds registradas para esta partida.</div>
+	{% endif %}
+	</div>
+</div>

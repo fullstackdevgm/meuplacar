@@ -1,0 +1,20 @@
+		<div class="col-xs-12 text-center tab-competition-summary next-matches">
+			{% if next_matches %}
+				{% partial 'competitionContentMatches' matches=next_matches title='Próximas Partidas' %}
+			{% endif %}
+			<div class="col-xs-12 nopadding text-center">
+				<br /><a href="#" class="more-matches">Mostrar mais partidas...</a>
+			</div>
+		</div>
+		<div class="col-xs-12 tab-competition-summary">
+			<br /><div class="col-xs-12 nopadding line">&nbsp;</div>
+		</div>
+		<div class="col-xs-12 tab-competition-summary">
+			<h3 class="text-center">Classificação</h3>
+		</div>
+		<div class="col-xs-12 text-center tab-competition-summary tab-competition-classification classification">
+			{% if current_season[0] %}
+				{% partial 'matchPageContentClassifications' %}
+			{% endif %}
+			<br />
+		</div>

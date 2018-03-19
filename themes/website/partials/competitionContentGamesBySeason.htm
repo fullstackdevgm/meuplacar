@@ -1,0 +1,9 @@
+		<div class="col-xs-12 text-center next-matches">
+			{% partial 'competitionContentMatches' matches=today_matches title='Hoje' %}
+		</div>
+		<div class="col-xs-12 text-center next-matches">
+			<br />{% partial 'competitionContentMatches' matches=last_matches title='Últimos Resultados' %}
+		</div>
+		<div class="col-xs-12 text-center next-matches">
+			<br />{% partial 'competitionContentMatches' matches=next_matches title='Próximas Partidas' %}
+		</div>

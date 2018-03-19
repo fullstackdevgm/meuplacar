@@ -1,0 +1,17 @@
+1.0.1:
+  - First version of Widgets
+  - Add MapPicker form widget
+1.0.2:
+  - Add Button form widget
+1.0.3:
+  - Add AutoziseModel behavior
+1.0.4:
+  - Add numberToWord twig filter
+1.0.5:
+  - !!! This is an important update that contains breaking changes. AutoziseModel behavior require the property autosizeRelation.
+1.0.6:
+  - Fix Unknown column 'autosizeRelation' error
+1.0.7:
+  - New auto apply of AutosizeBehavior for some known models
+  - Add Spanish language
+  - Add documentation of all widgets

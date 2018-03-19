@@ -1,0 +1,55 @@
+<div class="row">
+	<div class="container-fluid">
+		<div class="row competition-title classification-th">
+			<div class="col-xs-4 nopaddingleft">
+				<div class="col-xs-1 nopaddingleft">#</div>
+				<div class="col-xs-11 nopadding text-left">Equipe</div>
+			</div>
+			<div class="col-xs-5 nopaddingleft">
+				<div class="col-xs-2 nopadding totals first" title="Jogos">J</div>
+				<div class="col-xs-2 nopadding totals" title="Vitórias">V</div>
+				<div class="col-xs-2 nopadding totals" title="Empate">E</div>
+				<div class="col-xs-2 nopadding totals" title="Derrotas">D</div>
+				<div class="col-xs-2 nopadding totals" title="Gols">G</div>
+				<div class="col-xs-2 nopadding totals" title="Pontos">P</div>
+			</div>
+			<div class="col-xs-3 nopadding"><div class="col-xs-12 nopadding text-center">Últimos Resultados</div></div>
+		</div>
+		<div class="row nomarginlaterals">
+			<div class="col-xs-12 classification-list">
+				{% if current_season[0].groups.data %}
+				{% for group in current_season[0].groups.data %}
+				<a href="/competicao/{{current_season[0].competition_id}}/{{current_season[0].season_id}}"><h2 class="group" data-type="{{group.id}}">{{group.name}}</h2></a>
+				{% for team in group.teams.data %}
+				<a href="/equipe/{{team.team.name}}/{{team.team.id}}/{{current_season[0].season_id}}" class="ak-hover" >
+					<div class="row">
+						<big>
+							<div class="col-xs-4 nopaddingleft">
+								<div class="col-xs-1 nopadding_paddingleft10">{{team.position}}.</div>
+								<div class="col-xs-11 nopadding_paddingleft10 text-left"><img src="{{team.team.logo}}" />&nbsp;&nbsp;{{team.team.name}}</div>
+							</div>
+							<div class="col-xs-5 nopaddingleft">
+								<div class="col-xs-2 nopadding totals first forced_center">{{team.overall_played}}</div>
+								<div class="col-xs-2 nopadding totals forced_center">{{team.overall_win}}</div>
+								<div class="col-xs-2 nopadding totals forced_center">{{team.overall_draw}}</div>
+								<div class="col-xs-2 nopadding totals forced_center">{{team.overall_loose}}</div>
+								<div class="col-xs-2 nopadding totals">{{team.overall_goals_scored}}:{{team.overall_goals_attempted}}</div>
+								<div class="col-xs-2 nopadding totals">{{team.points}}</div>
+							</div> 
+							<div class="col-xs-3 nopadding">
+								{% set results_pt = team.recent_form|replace({'L':'D','W':'V','D':'E'}) %}
+								{% for i in [0, 1, 2, 3, 4] %}
+								<div class="result pull-left {% if results_pt|slice(i,1) == 'V' %}win{% elseif results_pt|slice(i,1) == 'D' %}loss{% else %}draw{% endif %}">{{results_pt|slice(i,1)}}</div>
+								{% endfor %}
+							</div>
+						</big>
+					</div>
+				</a>
+				{% endfor %}
+				{% endfor %}
+				<div class="row end">&nbsp;</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

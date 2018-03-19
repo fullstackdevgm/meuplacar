@@ -1,0 +1,82 @@
+description = "Default layout"
+==
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Meu Placar - {{ this.page.title }}</title>
+        <meta name="description" content="{{ this.page.meta_description }}">
+        <meta name="title" content="{{ this.page.meta_title }}">
+        <meta name="author" content="Fernando Henriques">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="generator" content="Meu Placar">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="{{ 'assets/images/logo-favicon2.png'|theme }}">
+        <link href="{{ 'assets/css/vendor.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/theme.css?138'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/responsive.css?15'|theme }}" rel="stylesheet">
+        {% styles %}
+    </head>
+    <body data-path-loading="{{ 'assets/images/loading.svg'|theme }}">
+
+        <!-- Header -->
+        <header id="layout-header">
+            {% partial 'site/header' %}
+        </header>
+
+        <!-- Content -->
+        <section id="layout-content">
+        	<div class="container">
+        		<div class="row hidden-xs">
+        			<div class="col-xs-12">
+        				{% partial 'site/ads/google970' %}
+        			</div>
+        		</div>
+				<div class="row">
+		        	<div class="col-xs-2 hidden-xs">
+		        		 {% partial 'site/default-left-sidebar' %}
+		        	</div>
+		        	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+		            	{% page %}
+		            	{% if this.page.id == 'home' or this.page.id == 'competitionDetails' %}
+		            	<!-- Modal -->
+						<div id="matchModal" class="modal fade" role="dialog">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						      </div>
+						      <div class="modal-body text-center" id="modalMatchPage">
+						      	<img class="loading" src="{{ 'assets/images/loading.svg'|theme }}" />
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						{% endif %}
+		            </div>
+		            <div class="col-xs-2 hidden-xs">
+		            	{% partial 'site/default-right-sidebar' %}
+		            </div>
+	           </div>
+        		<div class="row hidden-xs">
+        			<div class="col-xs-12">
+        				{% partial 'site/ads/google970-2' %}
+        			</div>
+        		</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="layout-footer">
+            {% partial 'site/footer' %}
+        </footer>
+
+        <!-- Scripts -->
+        <script src="{{ 'assets/vendor/jquery.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/bootstrap.js'|theme }}"></script>
+        <script src="{{ 'assets/javascript/main.js?9'|theme }}"></script>
+        {% framework extras %}
+        {% scripts %}
+    </body>
+</html>

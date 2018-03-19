@@ -1,0 +1,333 @@
+<div class="match-data text-center" data-id="{{match.id}}" data-season-id="{{match.season_id}}" data-home-team-id="{{match.homeTeam.id}}" data-away-team-id="{{match.awayTeam.id}}">
+	<div class="header">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="row">
+							<div class="col-xs-8 text-right nopadding">
+								<h3 class="nomargin"><a class="link-inherit" target="_blank" href="{{asset('equipe/' ~ match.homeTeam.name|replace({' ':'-'}) ~ '/' ~ match.homeTeam.id ~ '/' ~ match.season_id)}}">{{match.homeTeam.name}}</a></h3>
+							</div>
+							<div class="col-xs-4">
+								<div class="info result pull-right team-home-score">{{match.home_score}}</a></div>
+								<img class="team-logo pull-right" src="{{match.homeTeam.logo}}" />
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="row">
+							<div class="col-xs-4">
+								<div class="info result pull-left team-away-score">{{match.away_score}}</div>
+								<img class="team-logo pull-left" src="{{match.awayTeam.logo}}" />
+							</div>
+							<div class="col-xs-8 text-left nopadding">
+								<h3 class="nomargin"><a class="link-inherit" target="_blank" href="{{asset('equipe/' ~ match.awayTeam.name|replace({' ':'-'}) ~ '/' ~ match.awayTeam.id ~ '/' ~ match.season_id)}}">{{match.awayTeam.name}}</a></h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row time">
+			<div class="col-xs-12 text-center">
+				{% if match.status == 'NS' %}<span>Partida não iniciada.</span>
+		        {% elseif match.status == 'FT' %}<span>Encerrado</span>
+		        {% elseif match.status == 'HT' %}<span>Intervalo</span>
+		        {% elseif match.status == 'CANCL' %}<span>Cancelado</span>
+		        {% else %}
+		        	<span>{{match.minute}}{% if match.extra_minute != 0 %}+{{match.extra_minute}}{% endif %}&nbsp;Min.</span>
+		        {% endif %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="container-fluid">
+				<div class="menu match-page">
+					<ul>
+						<li class="live-centre active">Live Centre</li>
+						<li class="odds">Comparação de Odds</li>
+						<li class="h2h">H2H</li>
+						<li class="classifications">Classificações</li>
+						<li class="videos">Vídeos</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 menu-home match-tabs">
+			<div class="button pull-left sumary active">Sumário</div>
+			<div class="button pull-left stats">Estatísticas</div>
+			<div class="button pull-left teams">Equipes</div>
+			<div class="button pull-left commentaries hide">Comentários</div>
+		</div>
+	</div>
+	<div class="body" id="body-match-page">
+		<div class="row not-commentaries">
+			<div class="container-fluid">
+				<div class="competition-title first-time text-left">1º Parte</div>
+				{% if match.events.data %}
+					{% for event in match.events.data %}
+						{% if event.minute <= 45 and event.team_id == match.home_team_id %}
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="col-xs-5 match-details text-left {% if event.type == 'substitution' %}nopaddingright{% endif %}">
+									{% if event.minute %}
+										<span class="pull-left">
+											{{event.minute}}{% if event.extra_min %}+{{event.extra_min}}{% endif %}' &nbsp;
+										</span>
+										{% if event.type != 'substitution' %}
+											{% if event.type == 'goal' %}
+												<img class="pull-left" src="{{'assets/images/goal.png'|theme}}" />
+											{% elseif event.type == 'penalty' %}
+												<img class="pull-left" src="{{'assets/images/goal.png'|theme}}" />
+											{% elseif  event.type == 'yellowcard' %}
+												<img class="pull-left {{event.type}}" src="{{'assets/images/yellow_card.png'|theme}}" />
+											{% elseif event.type == 'yellowred' %}
+												<img class="pull-left {{event.type}}" src="{{'assets/images/yellow_red_card.png'|theme}}" />
+											{% elseif event.type == 'redcard'  %}
+												<img class="pull-left {{event.type}}" src="{{'assets/images/red_card.png'|theme}}" />
+											{% elseif  event.type == 'missed_penalty' %}
+												<i class="pull-left fa fa-warning"></i>
+											{% endif %}
+											<span class="pull-left">&nbsp;&nbsp;&nbsp;{% if event.player_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_name|replace({' ':'-'})}}/{{event.player_id}}" class="no-link">{{event.player_name}}</a>{% else %}Desconhecido{% endif %}</span>
+											{% if event.type == 'missed_penalty' %}
+												<span class="pull-left letter-player_out_name">perdeu um pênalti&nbsp;&nbsp;</span>
+											{% elseif event.type == 'penalty' %}
+												<span class="pull-left letter-player_out_name">de pênalti&nbsp;&nbsp;</span>
+											{% endif %}
+										{% else %}
+											<span class="pull-left">
+												<i class="fa fa-2x fa-caret-up" aria-hidden="true"></i>&nbsp;{% if event.player_in_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_in_name|replace({' ':'-'})}}/{{event.player_in_id}}" class="no-link">{{event.player_in_name}}</a>{% else %}Desconhecido{% endif %}&nbsp;&nbsp;&nbsp;
+												<i class="fa fa-2x fa-caret-down" aria-hidden="true"></i>&nbsp;<span class="letter-player_out_name">{% if event.player_out_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_out_name|replace({' ':'-'})}}/{{event.player_out_id}}" class="no-link">{{event.player_out_name}}</a>{% else %}Desconhecido{% endif %}</span>
+											</span>
+										{% endif %}
+									{% endif %}
+									<div class="clear"></div>
+								</div>
+								<div class="col-xs-2 text-center background-light-gray ht_score">{{match.ht_score}}</div>
+								<div class="col-xs-5 match-details">&nbsp;</div>
+							</div>
+						</div>
+						{% elseif event.minute <= 45 and event.team_id == match.away_team_id %}
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="col-xs-5 match-details text-left">&nbsp;</div>
+								<div class="col-xs-2 text-center background-light-gray ht_score">{{match.ht_score}}</div>
+								<div class="col-xs-5 match-details text-right {% if event.type == 'substitution' %}nopaddingleft{% endif %}">
+									{% if event.minute %}
+										<span class="pull-right">
+											 &nbsp;&nbsp;{{event.minute}}{% if event.extra_min %}+{{event.extra_min}}{% endif %}'
+										</span>
+										{% if event.type != 'substitution' %}
+											{% if event.type == 'goal' %}
+												<img class="pull-right" src="{{'assets/images/goal.png'|theme}}" />
+											{% elseif event.type == 'penalty' %}
+												<img class="pull-right" src="{{'assets/images/goal.png'|theme}}" />
+											{% elseif  event.type == 'yellowcard' %}
+												<img class="pull-right {{event.type}}" src="{{'assets/images/yellow_card.png'|theme}}" />
+											{% elseif event.type == 'yellowred' %}
+												<img class="pull-right {{event.type}}" src="{{'assets/images/yellow_red_card.png'|theme}}" />
+											{% elseif event.type == 'redcard'  %}
+												<img class="pull-right {{event.type}}" src="{{'assets/images/red_card.png'|theme}}" />
+											{% elseif  event.type == 'missed_penalty' %}
+												<img class="pull-right" src="{{'assets/images/error.png'|theme}}" />
+											{% endif %}
+											{% if  event.type == 'missed_penalty' %}
+												<span class="pull-right letter-player_out_name">perdeu um pênalti&nbsp;&nbsp;</span>
+											{% elseif event.type == 'penalty' %}
+												<span class="pull-right letter-player_out_name">de pênalti&nbsp;&nbsp;</span>
+											{% endif %}
+											<span class="pull-right">{% if event.player_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_name|replace({' ':'-'})}}/{{event.player_id}}" class="no-link">{{event.player_name}}</a>{% else %}Desconhecido{% endif %}&nbsp;&nbsp;&nbsp;</span>
+										{% else %}
+											<span class="pull-right">
+												<i class="fa fa-2x fa-caret-up" aria-hidden="true"></i>&nbsp;{% if event.player_in_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_in_name|replace({' ':'-'})}}/{{event.player_in_id}}" class="no-link">{{event.player_in_name}}</a>{% else %}Desconhecido{% endif %}
+												&nbsp;&nbsp;&nbsp;<i class="fa fa-2x fa-caret-down" aria-hidden="true"></i>&nbsp;<span class="letter-player_out_name">{% if event.player_out_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_out_name|replace({' ':'-'})}}/{{event.player_out_id}}" class="no-link">{{event.player_out_name}}</a>{% else %}Desconhecido{% endif %}&nbsp;&nbsp;</span>
+											</span>
+										{% endif %}
+									{% endif %}
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					{% endfor %}
+				{% else %}
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="col-xs-5 match-details">&nbsp;</div>
+							<div class="col-xs-2 text-center background-light-gray">
+								{% if not match.ht_score %}0-0{% else %}{{match.ht_score}}{% endif %}
+							</div>
+							<div class="col-xs-5 match-details">&nbsp;</div>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row not-commentaries">
+			<div class="container-fluid">
+				<div class="competition-title second-time text-left">2º Parte</div>
+				{% if match.events.data %}
+					{% for event in match.events.data %}
+						{% if event.minute > 45 and event.team_id == match.home_team_id %}
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="col-xs-5 match-details text-left {% if event.type == 'substitution' %}nopaddingright{% endif %}">
+									{% if event.minute %}
+										<span class="pull-left">
+											{{event.minute}}{% if event.extra_min %}+{{event.extra_min}}{% endif %}' &nbsp;
+										</span>
+										{% if event.type != 'substitution' %}
+											{% if event.type == 'goal' %}
+												<img class="pull-left" src="{{'assets/images/goal.png'|theme}}" />
+											{% elseif event.type == 'penalty' %}
+												<img class="pull-left" src="{{'assets/images/goal.png'|theme}}" />
+											{% elseif  event.type == 'yellowcard' %}
+												<img class="pull-left {{event.type}}" src="{{'assets/images/yellow_card.png'|theme}}" />
+											{% elseif event.type == 'yellowred' %}
+												<img class="pull-left {{event.type}}" src="{{'assets/images/yellow_red_card.png'|theme}}" />
+											{% elseif event.type == 'redcard'  %}
+												<img class="pull-left {{event.type}}" src="{{'assets/images/red_card.png'|theme}}" />
+											{% elseif event.type == 'missed_penalty' %}
+												<img class="pull-left" src="{{'assets/images/error.png'|theme}}" />
+											{% endif %}
+											<span class="pull-left">&nbsp;&nbsp;&nbsp;{% if event.player_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_name|replace({' ':'-'})}}/{{event.player_id}}" class="no-link">{{event.player_name}}</a>{% else %}Desconhecido{% endif %}</span>
+											{% if  event.type == 'missed_penalty' %}
+												<span class="pull-left letter-player_out_name">perdeu um pênalti&nbsp;&nbsp;</span>
+											{% elseif event.type == 'penalty' %}
+												<span class="pull-left letter-player_out_name">de pênalti&nbsp;&nbsp;</span>
+											{% endif %}
+										{% else %}
+											<span class="pull-left">
+												<i class="fa fa-2x fa-caret-up" aria-hidden="true"></i>&nbsp;{% if event.player_in_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_in_name|replace({' ':'-'})}}/{{event.player_in_id}}" class="no-link">{{event.player_in_name}}</a>{% else %}Desconhecido{% endif %}&nbsp;&nbsp;&nbsp;
+												<i class="fa fa-2x fa-caret-down" aria-hidden="true"></i>&nbsp;<span class="letter-player_out_name">{% if event.player_out_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_out_name|replace({' ':'-'})}}/{{event.player_out_id}}" class="no-link">{{event.player_out_name}}</a>{% else %}Desconhecido{% endif %}</span>
+											</span>
+										{% endif %}
+									{% endif %}
+									<div class="clear"></div>
+								</div>
+								<div class="col-xs-2 text-center background-light-gray ft_score">{{match.ft_score}}</div>
+								<div class="col-xs-5 match-details">&nbsp;</div>
+							</div>
+						</div>
+						{% elseif event.minute > 45 and event.team_id == match.away_team_id %}
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="col-xs-5 match-details text-left">&nbsp;</div>
+								<div class="col-xs-2 text-center background-light-gray ft_score">{{match.ft_score}}</div>
+								<div class="col-xs-5 match-details text-right {% if event.type == 'substitution' %}nopaddingleft{% endif %}">
+									{% if event.minute %}
+										<span class="pull-right">
+											 &nbsp;&nbsp;{{event.minute}}{% if event.extra_min %}+{{event.extra_min}}{% endif %}'
+										</span>
+										{% if event.type != 'substitution' %}
+											{% if event.type == 'goal' %}
+												<img class="pull-right" src="{{'assets/images/goal.png'|theme}}" />
+											{% elseif event.type == 'penalty' %}
+												<img class="pull-right" src="{{'assets/images/goal.png'|theme}}" />
+											{% elseif  event.type == 'yellowcard' %}
+												<img class="pull-right {{event.type}}" src="{{'assets/images/yellow_card.png'|theme}}" />
+											{% elseif event.type == 'yellowred' %}
+												<img class="pull-right {{event.type}}" src="{{'assets/images/yellow_red_card.png'|theme}}" />
+											{% elseif event.type == 'redcard' %}
+												<img class="pull-right {{event.type}}" src="{{'assets/images/red_card.png'|theme}}" />
+											{% elseif  event.type == 'missed_penalty' %}
+												<img class="pull-right" src="{{'assets/images/error.png'|theme}}" />
+											{% endif %}
+											{% if event.type == 'missed_penalty' %}
+												<span class="pull-right letter-player_out_name">perdeu um pênalti&nbsp;&nbsp;</span>
+											{% elseif event.type == 'penalty' %}
+												<span class="pull-right letter-player_out_name">de pênalti&nbsp;&nbsp;</span>
+											{% endif %}
+											<span class="pull-right">{% if event.player_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_name|replace({' ':'-'})}}/{{event.player_id}}" class="no-link">{{event.player_name}}</a>{% else %}Desconhecido{% endif %}&nbsp;&nbsp;&nbsp;</span>
+										{% else %}
+											<span class="pull-right">
+												<i class="fa fa-2x fa-caret-up" aria-hidden="true"></i>&nbsp;{% if event.player_in_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_in_name|replace({' ':'-'})}}/{{event.player_in_id}}" class="no-link">{{event.player_in_name}}</a>{% else %}Desconhecido{% endif %}&nbsp;&nbsp;&nbsp;
+												<i class="fa fa-2x fa-caret-down" aria-hidden="true"></i>&nbsp;<span class="letter-player_out_name">{% if event.player_out_name != 'Unknown' %}<a class="new-tab" href="/jogador/{{event.player_out_name|replace({' ':'-'})}}/{{event.player_out_id}}" class="no-link">{{event.player_out_name}}</a>{% else %}Desconhecido{% endif %}&nbsp;&nbsp;</span>
+											</span>
+										{% endif %}
+									{% endif %}
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					{% endfor %}
+				{% else %}
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="col-xs-5 match-details">&nbsp;</div>
+							<div class="col-xs-2 text-center background-light-gray">
+								{% if not match.ft_score %}0-0{% else %}{{match.ft_score}}{% endif %}
+							</div>
+							<div class="col-xs-5 match-details">&nbsp;</div>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row not-commentaries">
+			<div class="container-fluid">
+				<div class="competition-title text-left">Informações</div>
+				<div class="row">
+					<div class="col-xs-12 text-left"><b>Estádio:</b> {% if match.venue.name != '' %}{{match.venue.name}}{% else %}-{% endif %}</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 text-left"><b>Juiz:</b> {% if match.referee_id %}{{match.referee.name}}{% else %}-{% endif %}</div>
+				</div>
+			</div>
+		</div>
+		{% if commentaries|length > 0 %}
+		<div class="row not-commentaries">
+			<div class="container-fluid">
+				<div class="competition-title text-left">Comentários</div>
+				<div class="row">
+					<div class="col-xs-12 commentaries">
+						{% for commentary in commentaries %}
+							{% if commentary.minute != '-' and loop.index <= 4 %}
+							<div class="row nomarginlaterals">
+								<div class="col-xs-1 text-left nopadding">
+									<span class="pull-left">&nbsp;{{commentary.minute}}{% if commentary.extra_min %}+{{commentary.extra_min}}{% endif %}'&nbsp;</span>
+									{% if commentary.important != 0 %}<img class="pull-left" src="{{'assets/images/error.png'|theme}}" />{% endif %}
+									{% if commentary.is_goal != 0 %}<img class="pull-left" src="{{'assets/images/goal.png'|theme}}" />{% endif %}
+								</div>
+								<div class="col-xs-11 text-left nopaddingright text-justify">{{commentary.body}}</div>
+							</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+					<div class="col-xs-12 text-center"><br /><a href="#" class="more-comments">Mostrar mais comentários...</a></div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		<div class="row commentaries-tab hide">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12 menu-home match-tabs stats-tabs">
+						<div class="button pull-left">{% if match.status == 'HT' %}1º Tempo{% else %}Jogo{% endif %}</div>
+					</div>
+				</div>
+				<div class="competition-title line nomargin">&nbsp;</div>
+				<div class="row">
+					<div class="col-xs-12 commentaries">
+						{% for commentary in commentaries %}
+							{% if commentary.minute != '-' %}
+							<div class="row nomarginlaterals">
+								<div class="col-xs-1 text-left nopadding">
+									<span class="pull-left">&nbsp;{{commentary.minute}}{% if commentary.extra_min %}+{{commentary.extra_min}}{% endif %}'&nbsp;</span>
+									{% if commentary.important != 0 %}<img class="pull-left" src="{{'assets/images/error.png'|theme}}" />{% endif %}
+									{% if commentary.is_goal != 0 %}<img class="pull-left" src="{{'assets/images/goal.png'|theme}}" />{% endif %}
+								</div>
+								<div class="col-xs-11 text-left nopaddingright text-justify">{{commentary.body}}</div>
+							</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">&nbsp;</div>
+</div>
+{% partial 'site/ads/google300' %}

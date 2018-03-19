@@ -1,0 +1,17 @@
+<?php if ($this->previewMode): ?>
+    <div class="form-control"><?= e($value) ?></div>
+<?php else: ?>
+    <?php if(!$this->hasLocationField()): ?>
+    <div class="has-feedback">
+        <input type="text" name="<?= $name ?>" id="<?= $this->getId('location') ?>" value="<?= $value ?>"  class="form-control" autocomplete="off" maxlength="255">
+        <span class="icon-google form-control-feedback" aria-hidden="true" style="top: 0; color: #4285F4;"></span>
+    </div>
+    <?php endif; ?>
+
+    <div data-control="mappicker"
+         data-alias="<?= $this->alias ?>"
+         id="<?= $this->getId() ?>"
+         class="mappicker"
+        <?= $this->getFieldMapAttributes() ?>>
+    </div>
+<?php endif ?>

@@ -1,0 +1,29 @@
+{
+  "name": "planetadeleste/widgets",
+  "type": "october-plugin",
+  "description": "Reusable widgets for October CMS",
+  "keywords": [
+    "october",
+    "cms",
+    "widgets",
+    "button",
+    "map-picker",
+    "autosize-image",
+    "modal-controller"
+  ],
+  "require": {
+    "intervention/image": "^2.3",
+    "riskihajar/terbilang": "^1.0"
+  },
+  "scripts": {
+    "pre-install-cmd": [
+      "composer self-update"
+    ],
+    "pre-update-cmd": [
+      "composer self-update"
+    ],
+    "pre-autoload-dump": [
+      "composer self-update"
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+@media only screen and (max-width: 768px){
+	body {
+  		padding-top: 8px
+	}
+	h1.title-site{
+		font-size: 20px;
+		margin-top: 6px;
+    	margin-bottom: 0px
+	}
+	img.logo-img{
+		margin-top: 0px;
+		width: 39px;
+		height: 33px
+	}
+	#main-menu { 
+		height:35px 
+	}
+	#main-menu ul {
+		margin-left: -24px;
+	}
+	#main-menu ul li{
+		width: 20%;
+ 		height:35px; 
+		padding-top: 8px;
+    	font-size: 12px;
+	}
+	.line-space{
+		height: 5px;
+	}
+	.menu-home.ismobile .button:hover{
+		border: 1px solid #eeeeff;
+		background-color: transparent;
+		outline:none
+	}
+	.menu-home.ismobile .button:hover option{
+		outline:none
+	}
+	#main-menu ul li.icon .fa {
+	    font-size: 2.8em;
+	    margin-top: -7.1px;
+	}
+	#main-menu ul li.league {
+		width:45%
+	}
+	#main-menu ul li.league select{
+		border: 0;
+    	background-color: inherit;
+    	outline: none
+	}
+	.header-search{
+		margin-top:5px
+	}
+	.line-match{
+		background-color: #f5f5f5;
+		border-bottom: 1px solid #eeeeee
+	}
+	.mobile.live{
+		border-left: 3px solid #20c020
+	}
+	.line-match .home_team{
+		margin-bottom: 8px
+	}
+	.line-match .mobile .status{
+		padding-top: 14px!important
+	}
+	span.live-letter{
+		background-color:inherit
+	}
+	.line-match .pull-right.score{
+		color: steelblue;
+	}
+}
+@media only screen and (max-width: 768px){
+		h1.title-site{
+			font-size: 30px
+		}
+		img.logo-img{
+			margin-top: 4px;
+    		width: 43px;
+    		height: 37px;
+		}
+		input.input-underline{
+			width:95%
+		}
+		#main-menu ul li.league {
+			width:30%
+		}
+}

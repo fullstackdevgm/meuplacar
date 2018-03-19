@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="container-fluid">
+	{% if match.status != 'NS' %}
+		<div class="competition-title line-space nomargin">&nbsp;</div>
+		<div class="row">
+			<div class="col-xs-12">
+				{% if match.videos.data %}
+					{% for video in match.videos.data %}
+						{% if video.match_status == 'LIVE' %}
+							{% set description = 'AO VIVO - ' ~ video.minute %}
+						{% elseif video.match_status == 'FT' and video.minute == '90' %}
+							{% set description = 'Melhores Momentos da Partida' %}
+						{% else %}
+							{% set s = '' %}
+							{% if video.minute > 1 %} {% set s = 's' %} {% endif %} 
+							{% set description = 'Com ' ~ video.minute ~ ' minuto' ~ s ~ ' de jogo' %}
+						{% endif %}
+						<div class="col-xs-4 {% if loop.first or loop.index == 4 or loop.index == 7 or loop.index == 10  %}nopaddingleft{% elseif loop.index == 3 or loop.index == 6 or loop.index == 9 or loop.index == 12  %}nopaddingright{% endif %}">
+							<div class="iframeBlocker" data-index="{{loop.index}}"></div>
+							<div class="border-iframe">
+								<iframe src="{{video.url}}" width="100%" height="auto" frameborder="0"></iframe>
+							</div>
+							<a data-index="{{loop.index}}" href="{{video.url}}" data-lity>{{description}}</a>
+							<br /><br />
+						</div>
+					{% endfor %}
+					</div>
+				{% else %}
+					<div class="row nomarginlaterals"><div class="col-xs-12 text-center"><br />Nenhum vídeo para esta partida.</div></div>
+				{% endif %}
+			</div>
+		</div>
+	{% else %}
+		<div class="row text-center"><br /><br />Partida não iniciada. Não há vídeos.</div>
+	{% endif %}
+	</div>
+</div>

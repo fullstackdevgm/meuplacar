@@ -1,0 +1,28 @@
+title = "Odd"
+url = "/odd/:id"
+layout = "window"
+==
+<?php
+
+use Rebing\Soccerama\ServiceProvider;
+
+function onStart(){
+	$id = $this->param('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'homeTeam',1=>'awayTeam']);
+	try {
+		$this['odds'] = Soccerama::odds()->byMatchId($id);
+	} catch (Exception $e) {
+		$this['odds'] = NULL;
+	}
+
+	//CSS
+	$this->addCss('/themes/website/assets/css/plugins/lity.min.css');
+
+	//JS
+	$this->addJs('/themes/website/assets/javascript/plugins/lity.min.js');
+	$this->addJs('/themes/website/assets/javascript/odd.js?6');
+}
+
+?>
+==
+{% partial 'matchPageContentOdds' %}

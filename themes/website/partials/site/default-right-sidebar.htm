@@ -1,0 +1,8 @@
+<div class="sidebar_banner text-center">
+	{% content 'banners/sidebar_banner_right_top.htm' %}
+</div>
+
+{% partial 'ajax/social_networks.htm' title='Redes Sociais' %}
+{% if this.page.id == 'team' %}
+{% content 'sidebar_box_rssfeed.htm' title='RSS Feed' %}
+{% endif %}

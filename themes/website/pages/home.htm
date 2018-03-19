@@ -1,0 +1,210 @@
+title = "Home"
+url = "/"
+layout = "default"
+==
+<?php
+
+use Rebing\Soccerama\ServiceProvider;
+
+function onMatchById(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'homeTeam',1=>'awayTeam',2=>'venue',3=>'referee',4=>'events',5=>'lineup']);
+	$this['match']->events->data = array_reverse($this['match']->events->data);
+	$this['commentaries'] = Soccerama::commentaries()->byMatchId($id);
+	//var_dump($this['match']);
+}
+
+function onMatchByIdOnlyStats(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'homeStats',1=>'awayStats']);
+	//var_dump($this['match']);
+}
+
+function onMatchByIdOnlyLineup(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'lineup']);
+	$this['soccer_line'] = ['fifth'=>[1=>'40',2=>'125',3=>'225',4=>'315',5=>'400'],'fourth'=>[1=>'40',2=>'160',3=>'275',4=>'275',5=>'400'],'third'=>[1=>'65',2=>'115',3=>'225',4=>'325',5=>'375'],'second'=>[2=>'172',3=>'225',4=>'263'],'one'=>[3=>'225']];
+	//var_dump($this['match']);
+}
+
+function onStandingsById(){
+	$id = post('id');
+	$this['current_season'] = Soccerama::standings()->bySeasonId($id);
+	//var_dump($this['current_season']);
+}
+
+function onMatchByIdOnlyVideos(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'videos']);
+	//var_dump($this['match']);
+}
+
+function onHead2HeadByTeams(){
+	$home_id = post('home_id');
+	$away_id = post('away_id');
+	$this['head2head'] = Soccerama::head2head()->byTeamsId($home_id,$away_id,['0'=>'competition','1'=>'homeTeam','2'=>'awayTeam','3'=>'venue']);
+	//var_dump($this['head2head']);
+	$head2head_data = array();
+	foreach($this['head2head'] as $h2h){
+		if($h2h->status == 'FT'){
+			$competition = Soccerama::competitions()->byId($h2h->competition_id,['0'=>'country']);
+			$date = explode('-',$h2h->starting_date);
+			$date = $date[2].'.'.$date[1].'.'.$date[0];
+			$scoreboard = str_replace('-',' : ',$h2h->ft_score);
+			if($h2h->home_score > $h2h->away_score) $winner_initials = 'H';
+			else if($h2h->away_score > $h2h->home_score) $winner_initials = 'A';
+			else $winner_initials = 'E';
+			if(isset($h2h->venue->name)) $stadium = explode('(',$h2h->venue->name)[0]; else $stadium = '-';
+			$head2head_data[] = array(
+				'competition_id' => $h2h->competition_id,
+	  			'competition_name' => $h2h->competition->name,
+	  			'competition_country_flag' => $competition->country->flag,
+	  			'competition_country_name' => $competition->country->name,
+	  			'home_team_name' => $h2h->homeTeam->name,
+	  			'away_team_name' => $h2h->awayTeam->name,
+	  			'date' => $date,
+	  			'scoreboard' => $scoreboard,
+	  			'winner_initials' => $winner_initials,
+	  			'stadium' => $stadium
+			);
+		}
+	}
+	$this['head2head'] = $head2head_data;
+}
+
+function onOddsComparisonByMatchId(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'homeTeam',1=>'awayTeam']);
+	$this['odds'] = Soccerama::odds()->byMatchId($id);
+	//var_dump($this['odds']);
+}
+
+function onMatchesByDay(){
+  $day = post('day');
+  $competitions = Soccerama::competitions()->allWithCountries();
+  $competitions_country = array();
+  foreach($competitions as $competition){
+  	$competitions_country[$competition->id]['flag'] = $competition->country->flag;
+  	$competitions_country[$competition->id]['name'] = $competition->country->name;
+  }
+
+  $matches = Soccerama::matches()->byDate($day,$day,['0'=>'competition',1=>'homeTeam',2=>'awayTeam',3=>'events']);
+  $matches_data = array();
+  $away_team_redcard = 0; $home_team_redcard = 0;
+  //var_dump($matches);
+  foreach($matches as $match){
+  	foreach($match->events->data as $event){
+  		if($event->type == 'redcard' || $event->type == 'yellowred')
+  			if($event->team_id == $match->home_team_id) $home_team_redcard++; else $away_team_redcard++;
+  	}
+  	$matches_data[] = array(
+  		'match_id' => $match->id,
+  		'season_id' => $match->season_id,
+  		'competition_id' => $match->competition_id,
+  		'competition_name' => $match->competition->name,
+  		'competition_country_flag' => $competitions_country[$match->competition_id]['flag'],
+  		'competition_country_name' => $competitions_country[$match->competition_id]['name'],
+  		'starting_time' => substr($match->starting_time,0,5),
+  		'minute' => (isset($match->minute)?$match->minute:0),
+  		'extra_minute' => (isset($match->extra_minute)?$match->extra_minute:0),
+  		'status' => $match->status,
+  		'home_team_name' => $match->homeTeam->name,
+  		'away_team_name' => $match->awayTeam->name,
+  		'home_team_logo' => $match->homeTeam->logo,
+  		'away_team_logo' => $match->awayTeam->logo,
+  		'home_score' => $match->home_score,
+  		'away_score' => $match->away_score,
+  		'home_team_redcard' => $home_team_redcard,
+  		'away_team_redcard' => $away_team_redcard
+  	);
+  	$away_team_redcard = 0; $home_team_redcard = 0;
+  }
+  $this['matches'] = $matches_data;
+}
+
+function onStart()
+{
+  $competitions = Soccerama::competitions()->allWithCountries();
+  $competitions_country = array();
+  foreach($competitions as $competition){
+  	$competitions_country[$competition->id]['flag'] = $competition->country->flag;
+  	$competitions_country[$competition->id]['name'] = $competition->country->name;
+  }
+
+  $matches = Soccerama::matches()->byDate(date('Y-m-d'),date('Y-m-d'),['0'=>'competition',1=>'homeTeam',2=>'awayTeam',3=>'events']);
+  $matches_data = array();
+  //var_dump($matches);
+  foreach($matches as $match){
+  	$away_team_redcard = 0; $home_team_redcard = 0;
+  	foreach($match->events->data as $event){
+  		if($event->type == 'redcard' || $event->type == 'yellowred')
+  			if($event->team_id == $match->home_team_id) $home_team_redcard++; else $away_team_redcard++;
+  	}
+  	$matches_data[] = array(
+  		'match_id' => $match->id,
+  		'season_id' => $match->season_id,
+  		'competition_id' => $match->competition_id,
+  		'competition_name' => $match->competition->name,
+  		'competition_country_flag' => $competitions_country[$match->competition_id]['flag'],
+  		'competition_country_name' => $competitions_country[$match->competition_id]['name'],
+  		'starting_time' => substr($match->starting_time,0,5),
+  		'minute' => (isset($match->minute)?$match->minute:0),
+  		'extra_minute' => (isset($match->extra_minute)?$match->extra_minute:0),
+  		'status' => $match->status,
+  		'home_team_name' => $match->homeTeam->name,
+  		'away_team_name' => $match->awayTeam->name,
+  		'home_team_logo' => $match->homeTeam->logo,
+  		'away_team_logo' => $match->awayTeam->logo,
+  		'home_score' => $match->home_score,
+  		'away_score' => $match->away_score,
+  		'home_team_redcard' => $home_team_redcard,
+  		'away_team_redcard' => $away_team_redcard
+  	);
+  }
+  //var_dump($matches_data);
+
+  //CSS
+  $this->addCss('/themes/website/assets/css/plugins/picker.default.css?1');
+  $this->addCss('/themes/website/assets/css/plugins/picker.default.date.css?7');
+  $this->addCss('/themes/website/assets/css/plugins/lity.min.css');
+
+  //JS
+  $this->addJs('/themes/website/assets/javascript/plugins/picker.js');
+  $this->addJs('/themes/website/assets/javascript/plugins/picker.date.js');
+  $this->addJs('/themes/website/assets/javascript/plugins/lity.min.js');
+  $this->addJs('/themes/website/assets/javascript/home.js?114');
+
+  /*var outputs */
+  $this['matches'] = $matches_data;
+  $this['today'] = date("d/m");
+}
+
+?>
+==
+<div class="line-space visible-xs"></div>
+<div class="row nopadding">
+	<div class="col-xs-6 menu-home hidden-xs">
+		<div class="button pull-left all active">Todos</div>
+		<div class="button pull-left live">Ao Vivo</div>
+		<div class="button pull-left fineshed">Finalizados</div>
+		<div class="button pull-left next">Próximos</div>
+	</div>
+	<div class="col-xs-6 menu-home ismobile visible-xs">
+		<select name="filter-result" id="filter-result" class="button">
+			<option value="all" selected>Todos</option>
+			<option value="live">Ao Vivo</option>
+			<option value="fineshed">Finalizados</option>
+			<option value="next">Próximos</option>
+		</select>
+	</div>
+	<div class="col-xs-6">
+		<button data-click="next-day" class="button button-arrow nomargin pull-right">&gt;</button>
+		<input type="button" class="button pull-right day" value="{{today}}" />
+		<button data-click="prev-day" class="button button-arrow pull-right">&lt;</button>
+	</div>
+</div>
+<div class="row nopadding">
+	<div class="col-xs-12 text-center" id="competitionsToday">
+		{% partial 'competitionsTodayHome' %}
+	</div>
+</div>

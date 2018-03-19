@@ -1,0 +1,5 @@
+{
+  "require": {
+    "Rebing/laravel-soccerama": "^1.0"
+  }
+}

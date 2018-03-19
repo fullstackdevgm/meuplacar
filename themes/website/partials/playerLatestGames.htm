@@ -1,0 +1,16 @@
+{% for match in matches %}
+<div class="row nomarginlaterals">
+  <div class="col-xs-1 text-left nopadding"><b>{{match.date}}</b></div>
+  <div class="col-xs-3 text-left nopadding_paddingleft10 nopaddingright"><img title="{{match.competition_country_name}}" src="{{match.competition_country_flag}}" />&nbsp;&nbsp;{{match.competition_name|replace({'Club Friendly':'Amistoso'})}}</div>
+  <div class="col-xs-2 text-left nopadding">{% if match.winner_initials == 'H' %}<div class="result pull-left win">V</div>{% elseif match.winner_initials == 'E' %}<div class="result pull-left draw">E</div>{% else %}<div class="result pull-left loss">D</div>{% endif %} {{match.home_team_name}}</div>
+  <div class="col-xs-2 text-left nopadding_paddingleft5 nopaddingright">{% if match.winner_initials == 'A' %}<div class="result pull-left win">V</div>{% elseif match.winner_initials == 'E' %}<div class="result pull-left draw">E</div>{% else %}<div class="result pull-left loss">D</div>{% endif %} {{match.away_team_name}}</div>
+  <div class="col-xs-1 nopadding_paddingleft10 nopaddingright"><b>{{match.scoreboard}}</b></div>
+  <div class="col-xs-3 nopadding">
+    <div class="col-xs-3 text-center nopadding">{{match.assists}}</div>
+    <div class="col-xs-3 text-center nopadding">{{match.goals}}</div>
+    <div class="col-xs-3 text-center nopaddingt">{{match.yellowcards}}</div>
+    <div class="col-xs-3 text-center nopadding">{{match.redcards}}</div>
+  </div>
+</div>
+{% endfor%}
+<div class="row end nomarginlaterals">&nbsp;</div>

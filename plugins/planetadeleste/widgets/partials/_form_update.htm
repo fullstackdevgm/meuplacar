@@ -1,0 +1,61 @@
+<?php
+    $controllerClassName = get_class($this);
+    $controllerUrlName = snake_case(class_basename( $controllerClassName ));
+    $controllerParts = explode("\\", $controllerClassName, 3);
+    array_pop($controllerParts);
+    list( $owner, $plugin ) = array_map("strtolower", $controllerParts);
+    $backendUrl = "{$owner}/{$plugin}/{$controllerUrlName}";
+    $trans = "{$owner}.{$plugin}::lang.";
+?>
+<?php Block::put('breadcrumb') ?>
+<ul>
+    <li>
+        <a href="<?= Backend::url($backendUrl) ?>"><?= e(trans($trans.$controllerUrlName.'.menu_label')) ?></a>
+    </li>
+    <li><?= e(trans($this->pageTitle)) ?></li>
+</ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError):
+    $withSidebar = (count(array_get($this->formGetWidget()->secondaryTabs, 'fields')) > 0) ;
+    if($withSidebar):
+?>
+        <?php Block::put('form-contents') ?>
+            <div class="layout-row min-size">
+                <?= $this->formRenderOutsideFields() ?>
+            </div>
+
+            <div class="layout-row">
+                <?= $this->formRenderPrimaryTabs() ?>
+            </div>
+        <?php Block::endPut() ?>
+
+        <?php Block::put('form-sidebar') ?>
+            <div class="hide-tabs"><?= $this->formRenderSecondaryTabs() ?></div>
+        <?php Block::endPut() ?>
+
+
+        <?php Block::put('body') ?>
+            <div class="layout fancy-layout">
+                <?= Form::open(['class' => 'layout']) ?>
+                <?= $this->makeLayout('form-with-sidebar') ?>
+                <?= Form::close() ?>
+            </div>
+        <?php Block::endPut() ?>
+
+    <?php else: ?>
+        <?php Block::put('body') ?>
+            <div class="layout fancy-layout">
+                <?= Form::open(['class' => 'layout']) ?>
+                <?= $this->formRender() ?>
+                <?= Form::close() ?>
+            </div>
+        <?php Block::endPut() ?>
+    <?php endif ?>
+<?php else: ?>
+
+<p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<p><a href="<?= Backend::url($backendUrl) ?>"
+      class="btn btn-default"><?= e(trans($trans.$controllerUrlName.'.return_to_list')) ?></a></p>
+
+<?php endif ?>

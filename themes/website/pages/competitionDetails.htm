@@ -1,0 +1,242 @@
+title = "Detalhes da Competição"
+url = "/competicao/:id_competition/:id_season"
+layout = "default"
+==
+<?php
+
+function onSummaryAndClassificationBySeason()
+{
+	$id = post('id');
+	$season_data = Soccerama::standings()->bySeasonId($id);
+	
+	$matches = Soccerama::seasons()->resultsbyDate($id,date('Y-m-d', strtotime("+1 days",strtotime(date('Y-m-d')))),date('Y-m-d', strtotime("+7 days",strtotime(date('Y-m-d')))),['0'=>'competition',1=>'homeTeam',2=>'awayTeam',3=>'events']);
+    $matches_data = array();
+  	foreach($matches as $match){
+  		$away_team_redcard = 0; $home_team_redcard = 0; 
+  		foreach($match->events->data as $event){
+  			if($event->type == 'redcard' || $event->type == 'yellowred')
+  				if($event->team_id == $match->home_team_id) $home_team_redcard++; else $away_team_redcard++;
+  		}
+  		$starting_date = explode('-',$match->starting_date);
+  		$starting_date = $starting_date[2].'/'.$starting_date[1].'/'.$starting_date[0];
+  		$matches_data[] = array(
+  			'match_id' => $match->id,
+  			'season_id' => $match->season_id,
+  			'competition_id' => $match->competition_id,
+  			'starting_date' => $starting_date,
+  			'starting_time' => substr($match->starting_time,0,5),
+  			'minute' => (isset($match->minute)?$match->minute:0),
+  			'extra_minute' => (isset($match->extra_minute)?$match->extra_minute:0),
+  			'status' => $match->status,
+  			'home_team_name' => $match->homeTeam->name,
+  			'away_team_name' => $match->awayTeam->name,
+  			'home_team_logo' => $match->homeTeam->logo,
+  			'away_team_logo' => $match->awayTeam->logo,
+  			'home_score' => $match->home_score,
+  			'away_score' => $match->away_score,
+  			'home_team_redcard' => $home_team_redcard,
+  			'away_team_redcard' => $away_team_redcard		
+  		);
+  	}
+	
+	$this['current_season'] = $season_data;
+	$this['next_matches'] = $matches_data;
+}
+
+function onGamesBySeason()  {
+	$id = post('id');
+	
+	$today_matches = Soccerama::seasons()->resultsbyDate($id,date('Y-m-d'),date('Y-m-d'),['0'=>'competition',1=>'homeTeam',2=>'awayTeam',3=>'events']);
+    $today_matches_data = array();
+  	foreach($today_matches as $match){
+  		$away_team_redcard = 0; $home_team_redcard = 0; 
+  		foreach($match->events->data as $event){
+  			if($event->type == 'redcard' || $event->type == 'yellowred')
+  				if($event->team_id == $match->home_team_id) $home_team_redcard++; else $away_team_redcard++;
+  		}
+  		$starting_date = explode('-',$match->starting_date);
+  		$starting_date = $starting_date[2].'/'.$starting_date[1].'/'.$starting_date[0];
+  		$today_matches_data[] = array(
+  			'match_id' => $match->id,
+  			'season_id' => $match->season_id,
+  			'competition_id' => $match->competition_id,
+  			'starting_date' => $starting_date,
+  			'starting_time' => substr($match->starting_time,0,5),
+  			'minute' => (isset($match->minute)?$match->minute:0),
+  			'extra_minute' => (isset($match->extra_minute)?$match->extra_minute:0),
+  			'status' => $match->status,
+  			'home_team_name' => $match->homeTeam->name,
+  			'away_team_name' => $match->awayTeam->name,
+  			'home_team_logo' => $match->homeTeam->logo,
+  			'away_team_logo' => $match->awayTeam->logo,
+  			'home_score' => $match->home_score,
+  			'away_score' => $match->away_score,
+  			'home_team_redcard' => $home_team_redcard,
+  			'away_team_redcard' => $away_team_redcard		
+  		);
+  	}
+  	
+  	$last_matches = Soccerama::seasons()->resultsbyDate($id,date('Y-m-d', strtotime("-15 days",strtotime(date('Y-m-d')))),date('Y-m-d', strtotime("-1 days",strtotime(date('Y-m-d')))),['0'=>'competition',1=>'homeTeam',2=>'awayTeam',3=>'events']);
+    $last_matches_data = array();
+  	foreach($last_matches as $match){
+  		$away_team_redcard = 0; $home_team_redcard = 0; 
+  		foreach($match->events->data as $event){
+  			if($event->type == 'redcard' || $event->type == 'yellowred')
+  				if($event->team_id == $match->home_team_id) $home_team_redcard++; else $away_team_redcard++;
+  		}
+  		$starting_date = explode('-',$match->starting_date);
+  		$starting_date = $starting_date[2].'/'.$starting_date[1].'/'.$starting_date[0];
+  		$last_matches_data[] = array(
+  			'match_id' => $match->id,
+  			'season_id' => $match->season_id,
+  			'competition_id' => $match->competition_id,
+  			'starting_date' => $starting_date,
+  			'starting_time' => substr($match->starting_time,0,5),
+  			'minute' => (isset($match->minute)?$match->minute:0),
+  			'extra_minute' => (isset($match->extra_minute)?$match->extra_minute:0),
+  			'status' => $match->status,
+  			'home_team_name' => $match->homeTeam->name,
+  			'away_team_name' => $match->awayTeam->name,
+  			'home_team_logo' => $match->homeTeam->logo,
+  			'away_team_logo' => $match->awayTeam->logo,
+  			'home_score' => $match->home_score,
+  			'away_score' => $match->away_score,
+  			'home_team_redcard' => $home_team_redcard,
+  			'away_team_redcard' => $away_team_redcard		
+  		);
+  	}
+  	
+    $next_matches = Soccerama::seasons()->resultsbyDate($id,date('Y-m-d', strtotime("+1 days",strtotime(date('Y-m-d')))),date('Y-m-d', strtotime("+15 days",strtotime(date('Y-m-d')))),['0'=>'competition',1=>'homeTeam',2=>'awayTeam',3=>'events']);
+    $next_matches_data = array();
+  	foreach($next_matches as $match){
+  		$away_team_redcard = 0; $home_team_redcard = 0; 
+  		foreach($match->events->data as $event){
+  			if($event->type == 'redcard' || $event->type == 'yellowred')
+  				if($event->team_id == $match->home_team_id) $home_team_redcard++; else $away_team_redcard++;
+  		}
+  		$starting_date = explode('-',$match->starting_date);
+  		$starting_date = $starting_date[2].'/'.$starting_date[1].'/'.$starting_date[0];
+  		$next_matches_data[] = array(
+  			'match_id' => $match->id,
+  			'season_id' => $match->season_id,
+  			'competition_id' => $match->competition_id,
+  			'starting_date' => $starting_date,
+  			'starting_time' => substr($match->starting_time,0,5),
+  			'minute' => (isset($match->minute)?$match->minute:0),
+  			'extra_minute' => (isset($match->extra_minute)?$match->extra_minute:0),
+  			'status' => $match->status,
+  			'home_team_name' => $match->homeTeam->name,
+  			'away_team_name' => $match->awayTeam->name,
+  			'home_team_logo' => $match->homeTeam->logo,
+  			'away_team_logo' => $match->awayTeam->logo,
+  			'home_score' => $match->home_score,
+  			'away_score' => $match->away_score,
+  			'home_team_redcard' => $home_team_redcard,
+  			'away_team_redcard' => $away_team_redcard		
+  		);
+  	}
+	
+	
+	$this['last_matches'] = $last_matches_data;
+  	$this['next_matches'] = $next_matches_data;
+}
+
+function onTopScorersBySeason() {
+  $id = post('id');
+  $season_data = Soccerama::standings()->bySeasonId($id);
+  $top_scorers = Soccerama::topscorers()->bySeasonId($id);
+  $this['current_season'] = $season_data;
+  $this['top_scorers'] = $top_scorers;
+}
+
+function onStart()
+{
+	$season_data = Soccerama::standings()->setSort(['0'=>'group'])->bySeasonId($this->param('id_season'));
+  //var_dump($season_data); exit();
+	$competition = Soccerama::competitions()->byId($this->param('id_competition'),['0'=>'country',1=>'currentSeason']);
+	
+	$matches = Soccerama::seasons()->resultsbyDate($this->param('id_season'),date('Y-m-d', strtotime("+1 days",strtotime(date('Y-m-d')))),date('Y-m-d', strtotime("+7 days",strtotime(date('Y-m-d')))),['0'=>'competition',1=>'homeTeam',2=>'awayTeam',3=>'events']);
+    $matches_data = array();
+  	//var_dump($matches);
+  	foreach($matches as $match){
+  		$away_team_redcard = 0; $home_team_redcard = 0; 
+  		foreach($match->events->data as $event){
+  			if($event->type == 'redcard' || $event->type == 'yellowred')
+  				if($event->team_id == $match->home_team_id) $home_team_redcard++; else $away_team_redcard++;
+  		}
+  		$starting_date = explode('-',$match->starting_date);
+  		$starting_date = $starting_date[2].'/'.$starting_date[1].'/'.$starting_date[0];
+  		$matches_data[] = array(
+  			'match_id' => $match->id,
+  			'season_id' => $match->season_id,
+  			'competition_id' => $match->competition_id,
+  			'starting_date' => $starting_date,
+  			'starting_time' => substr($match->starting_time,0,5),
+  			'minute' => (isset($match->minute)?$match->minute:0),
+  			'extra_minute' => (isset($match->extra_minute)?$match->extra_minute:0),
+  			'status' => $match->status,
+  			'home_team_name' => $match->homeTeam->name,
+  			'away_team_name' => $match->awayTeam->name,
+  			'home_team_logo' => $match->homeTeam->logo,
+  			'away_team_logo' => $match->awayTeam->logo,
+  			'home_score' => $match->home_score,
+  			'away_score' => $match->away_score,
+  			'home_team_redcard' => $home_team_redcard,
+  			'away_team_redcard' => $away_team_redcard		
+  		);
+  	}
+	
+	//JS
+	$this->addJs('/themes/website/assets/javascript/competitionDetails.js?8');
+	
+	$this['current_season'] = $season_data;
+	$this['competition'] = $competition;
+	$this['next_matches'] = $matches_data;
+}
+
+?>
+==
+<div class="row nopadding">
+	<div class="col-xs-12 sub-header">
+		<div class="col-xs-2 nopaddingleft">
+			<img class="imgH1" src="{{competition.country.flag}}" />
+		</div>
+		<div class="col-xs-10 text-left nopaddingleft">
+			<h1 class="nomargin">{{competition.name}}</h1>
+			<h4 class="nomargin">({{competition.currentSeason.name}})</h4>
+		</div>
+	</div>	
+</div>
+<div class="row nopadding">
+	<div class="col-xs-12 menu-home competition-tabs">
+		<div class="button pull-left summary active">Sumário</div>
+		<div class="button pull-left classification">Classificação</div>
+    <div class="button pull-left games">Partidas</div>
+		<div class="button pull-left topscorers">Artilheiros</div>
+	</div>
+</div>
+<div class="row nopadding">
+	<div><br /></div>
+	<div id="body-competition-page" class="text-center" data-tab-actual="summary" data-season-id="{{competition.currentSeason.id}}">
+		<div class="col-xs-12 text-center tab-competition-summary next-matches">
+			{% if next_matches %}
+				{% partial 'competitionContentMatches' matches=next_matches title='Próximas Partidas' %}
+			{% endif %}
+			<div class="col-xs-12 nopadding text-center">
+				<br /><a href="#" class="more-matches">Mostrar mais partidas...</a>
+			</div>
+		</div>
+		<div class="col-xs-12 tab-competition-summary">
+			<br /><div class="col-xs-12 nopadding line">&nbsp;</div>
+		</div>
+		<div class="col-xs-12 tab-competition-summary">
+			<h3 class="text-center">Classificação</h3>
+		</div>
+		<div class="col-xs-12 text-center tab-competition-summary tab-competition-classification classification">
+			{% if current_season[0] %}
+				{% partial 'matchPageContentClassifications' %}
+			{% endif %}
+			<br />
+		</div>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+<div class="row">
+	<div class="container-fluid">
+	{% if head2head|length > 0 %}
+		<div class="competition-title">Últimos Confrontos</div>
+		<div class="row">
+			<div class="col-xs-12 head2head">
+				{% for h2h in head2head %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopadding"><b>{{h2h.date}}</b></div>
+					<div class="col-xs-3 text-left nopadding_paddingleft10 nopaddingright"><img title="{{h2h.competition_country_name}}" src="{{h2h.competition_country_flag}}" />&nbsp;&nbsp;{{h2h.competition_name|replace({'Club Friendly':'Amistoso'})}}</div>
+					<div class="col-xs-2 text-left nopadding">{% if h2h.winner_initials == 'H' %}<div class="result pull-left win">V</div>{% elseif h2h.winner_initials == 'E' %}<div class="result pull-left draw">E</div>{% else %}<div class="result pull-left loss">D</div>{% endif %} {{h2h.home_team_name}}</div>
+					<div class="col-xs-2 text-left nopadding_paddingleft5 nopaddingright">{% if h2h.winner_initials == 'A' %}<div class="result pull-left win">V</div>{% elseif h2h.winner_initials == 'E' %}<div class="result pull-left draw">E</div>{% else %}<div class="result pull-left loss">D</div>{% endif %} {{h2h.away_team_name}}</div>
+					<div class="col-xs-3 text-center nopadding">{{h2h.stadium}}</div>
+					<div class="col-xs-1 nopadding_paddingleft10 nopaddingright"><b>{{h2h.scoreboard}}</b></div>
+				</div>
+				{% endfor%}
+				<div class="row end nomarginlaterals">&nbsp;</div>
+			</div>
+		</div>
+	{% else %}
+		<div class="row text-center"><br /><br />Não há histórico registrado entre estes times.</div>
+	{% endif %}
+	</div>
+</div>

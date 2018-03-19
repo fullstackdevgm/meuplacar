@@ -1,0 +1,23 @@
+{
+    "name": "october/demo-theme",
+    "type": "october-theme",
+    "description": "Meu Placar OctoberCMS theme",
+    "keywords": ["october", "cms", "meuplacar", "theme"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fernando Henriques",
+            "email": "fernando.trabalhos@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": "~1.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

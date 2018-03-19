@@ -1,0 +1,113 @@
+title = "Jogo"
+url = "/jogo/:id"
+layout = "window"
+==
+<?php
+
+use Rebing\Soccerama\ServiceProvider;
+
+function onComentariesByMatchId(){
+	$id = post('id');
+	$this['commentaries'] = Soccerama::commentaries()->byMatchId($id);
+}
+
+function onMatchById(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'homeTeam',1=>'awayTeam',2=>'venue',3=>'referee',4=>'events',5=>'lineup']);
+	$this['match']->events->data = array_reverse($this['match']->events->data);
+	$this['commentaries'] = Soccerama::commentaries()->byMatchId($id);
+	//var_dump($this['match']);
+}
+
+function onMatchByIdOnlyStats(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'homeStats',1=>'awayStats']);
+	//var_dump($this['match']);
+}
+
+function onMatchByIdOnlyLineup(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'lineup']);
+	$this['soccer_line'] = ['fifth'=>[1=>'40',2=>'125',3=>'225',4=>'315',5=>'400'],'fourth'=>[1=>'40',2=>'160',3=>'275',4=>'275',5=>'400'],'third'=>[1=>'65',2=>'115',3=>'225',4=>'325',5=>'375'],'second'=>[2=>'172',3=>'225',4=>'263'],'one'=>[3=>'225']];
+	//var_dump($this['match']);
+}
+
+function onStandingsById(){
+	$id = post('id');
+	$this['current_season'] = Soccerama::standings()->setSort(['0'=>'group'])->bySeasonId($id);
+	//var_dump($this['current_season']);
+}
+
+function onMatchByIdOnlyVideos(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'videos']);
+	//var_dump($this['match']);
+}
+
+function onHead2HeadByTeams(){
+	$home_id = post('home_id');
+	$away_id = post('away_id');
+	$this['head2head'] = Soccerama::head2head()->byTeamsId($home_id,$away_id,['0'=>'competition','1'=>'homeTeam','2'=>'awayTeam','3'=>'venue']);
+	//var_dump($this['head2head']);
+	$head2head_data = array();
+	foreach($this['head2head'] as $h2h){
+		if($h2h->status == 'FT'){
+			try {
+				$competition = Soccerama::competitions()->byId($h2h->competition_id,['0'=>'country']);
+				$date = explode('-',$h2h->starting_date);
+				$date = $date[2].'.'.$date[1].'.'.$date[0];
+				$scoreboard = str_replace('-',' : ',$h2h->ft_score);
+				if($h2h->home_score > $h2h->away_score) $winner_initials = 'H';
+				else if($h2h->away_score > $h2h->home_score) $winner_initials = 'A';
+				else $winner_initials = 'E';
+				if(isset($h2h->venue->name)) $stadium = explode('(',$h2h->venue->name)[0]; else $stadium = '-';
+				$head2head_data[] = array(
+					'competition_id' => $h2h->competition_id,
+					'competition_name' => $h2h->competition->name,
+					'competition_country_flag' => $competition->country->flag,
+					'competition_country_name' => $competition->country->name,
+					'home_team_name' => $h2h->homeTeam->name,
+					'away_team_name' => $h2h->awayTeam->name,
+					'date' => $date,
+					'scoreboard' => $scoreboard,
+					'winner_initials' => $winner_initials,
+					'stadium' => $stadium
+					);
+			} catch (Exception $e) {
+				continue;
+			}
+		}
+	}
+	$this['head2head'] = $head2head_data;
+}
+
+function onOddsComparisonByMatchId(){
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($id,['0'=>'homeTeam',1=>'awayTeam']);
+	try {
+		$this['odds'] = Soccerama::odds()->byMatchId($id);
+	} catch (Exception $e) {
+		$this['odds'] = NULL;
+	}
+	//var_dump($this['odds']);
+}
+
+function onStart()
+{
+	$id = post('id');
+	$this['match'] = Soccerama::matches()->byId($this->param('id'),['0'=>'homeTeam',1=>'awayTeam',2=>'venue',3=>'referee',4=>'events',5=>'lineup']);
+	$this['match']->events->data = array_reverse($this['match']->events->data);
+	$this['commentaries'] = Soccerama::commentaries()->byMatchId($this->param('id'));
+  //var_dump($matches_data);
+
+  //CSS
+	$this->addCss('/themes/website/assets/css/plugins/lity.min.css');
+
+  //JS
+	$this->addJs('/themes/website/assets/javascript/plugins/lity.min.js');
+	$this->addJs('/themes/website/assets/javascript/match.js?6');
+}
+
+?>
+==
+{% partial 'matchPageContent' %}

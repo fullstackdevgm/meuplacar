@@ -1,0 +1,26 @@
+<div class="row commentaries-tab">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 menu-home match-tabs stats-tabs">
+        <div class="button pull-left active">Jogo</div>
+      </div>
+    </div>
+    <div class="competition-title line nomargin">&nbsp;</div>
+    <div class="row">
+      <div class="col-xs-12 commentaries">
+        {% for commentary in commentaries %}
+          {% if commentary.minute != '-' %}
+          <div class="row nomarginlaterals">
+            <div class="col-xs-1 text-left nopadding">
+              <span class="pull-left">&nbsp;{{commentary.minute}}{% if commentary.extra_min %}+{{commentary.extra_min}}{% endif %}'&nbsp;</span>
+              {% if commentary.important != 0 %}<img class="pull-right" src="{{'assets/images/error.png'|theme}}" />{% endif %}
+              {% if commentary.is_goal != 0 %}<img class="pull-right" src="{{'assets/images/goal.png'|theme}}" />{% endif %}
+            </div>
+            <div class="col-xs-11 text-left nopaddingright text-justify">{{commentary.body}}</div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1116 @@
+{% set defense_home = 0 %}
+{% set libero_home = 0 %}
+{% set midfield_home = 0 %}
+{% set forward_home = 0 %}
+{% set defense_away = 0 %}
+{% set libero_away = 0 %}
+{% set midfield_away = 0 %}
+{% set forward_away = 0 %}
+{% if match.lineup.data %}
+	{% for lineup in match.lineup.data %}
+		{% if lineup.team_id == match.home_team_id %}
+			{% if lineup.posx == '2' %}
+				{% set defense_home = defense_home+1 %}
+			{% elseif lineup.posx == '3' %}
+				{% set libero_home = libero_home+1 %}
+			{% elseif lineup.posx == '4' %}
+				{% set midfield_home = midfield_home+1 %}
+			{% elseif lineup.posx == '5' %}
+				{% set forward_home = forward_home+1 %}
+			{% endif %}
+		{% elseif lineup.team_id == match.away_team_id %}
+			{% if lineup.posx == '2' %}
+				{% set defense_away = defense_away+1 %}
+			{% elseif lineup.posx == '3' %}
+				{% set libero_away = libero_away+1 %}
+			{% elseif lineup.posx == '4' %}
+				{% set midfield_away = midfield_away+1 %}
+			{% elseif lineup.posx == '5' %}
+				{% set forward_away = forward_away+1 %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
+{% if libero_home > 0 %}
+	{% set formation_home =  defense_home ~ '-' ~ libero_home ~ '-' ~ midfield_home ~ '-' ~ forward_home %}
+{% else %}
+		{% set formation_home =  defense_home ~ '-' ~ midfield_home ~ '-' ~ forward_home %}
+{% endif %}
+{% if libero_away > 0 %}
+	{% set formation_away =  defense_away ~ '-' ~ libero_away ~ '-' ~ midfield_away ~ '-' ~ forward_away %}
+{% else %}
+		{% set formation_away =  defense_away ~ '-' ~ midfield_away ~ '-' ~ forward_away %}
+{% endif %}
+<div class="row">
+	<div class="container-fluid">
+		{% if (defense_home != 0 or forward_home != 0) and (defense_away != 0 and forward_away != 0) %}
+		<div class="competition-title text-center">
+			<span class="pull-left formation">{{formation_home}}</span>Formações<span class="pull-right formation">{{formation_away}}</span>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 soccer-field">
+				{% if match.lineup.data %}
+					{% for lineup in match.lineup.data %}
+						{% if lineup.team_id == match.home_team_id %}
+							{% if lineup.position == 'Goalkeeper' %}
+							<div class="player goalkeeper home">
+								<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+								<div class="player_name text-center">
+									<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+										{% set player_name_array = lineup.player_name|split(' ') %}
+										{% if player_name_array|length > 1 %}
+											{% for name in player_name_array %}
+	    										{% if loop.first %}
+	    											{{name|slice(0,1)}}.&nbsp;
+	    										{% elseif loop.last %}
+	    											{{name}}
+	    										{% endif %}
+											{% endfor %}
+										{% else %}
+											{{lineup.player_name}}
+										{% endif %}
+									</a></span></div>
+								</div>
+							</div>
+							{% elseif lineup.posx == '2' %}
+								{% if defense_home == '5' %}
+									{% for key, top in soccer_line.fifth %}
+										{% if key == lineup.posy %}
+											<div class="player line defense home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif defense_home == '4' %}
+									{% for key, top in soccer_line.fourth %}
+										{% if key == lineup.posy %}
+											<div class="player line defense home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif defense_home == '3' %}
+									{% for key, top in soccer_line.third %}
+										{% if key == lineup.posy %}
+											<div class="player line defense home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif defense_home == '2' %}
+									{% for key, top in soccer_line.second %}
+										{% if key == lineup.posy %}
+											<div class="player line defense home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									{% for key, top in soccer_line.one %}
+										<div class="player line defense home" style="top:{{top}}px">
+											<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+											<div class="player_name text-center">
+												<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+													{% set player_name_array = lineup.player_name|split(' ') %}
+													{% if player_name_array|length > 1 %}
+														{% for name in player_name_array %}
+				    										{% if loop.first %}
+				    											{{name|slice(0,1)}}.&nbsp;
+				    										{% elseif loop.last %}
+				    											{{name}}
+				    										{% endif %}
+														{% endfor %}
+													{% else %}
+														{{lineup.player_name}}
+													{% endif %}
+												</a></span></div>
+											</div>
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% elseif lineup.posx == '3' %}
+								{% if libero_home == '5' %}
+									{% for key, top in soccer_line.fifth %}
+										{% if key == lineup.posy %}
+											<div class="player line libero home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif libero_home == '4' %}
+									{% for key, top in soccer_line.fourth %}
+										{% if key == lineup.posy %}
+											<div class="player line libero home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif libero_home == '3' %}
+									{% for key, top in soccer_line.third %}
+										{% if key == lineup.posy %}
+											<div class="player line libero home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif libero_home == '2' %}
+									{% for key, top in soccer_line.second %}
+										{% if key == lineup.posy %}
+											<div class="player line libero home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									{% for key, top in soccer_line.one %}
+										<div class="player line libero home" style="top:{{top}}px">
+											<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+											<div class="player_name text-center">
+												<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+													{% set player_name_array = lineup.player_name|split(' ') %}
+													{% if player_name_array|length > 1 %}
+														{% for name in player_name_array %}
+				    										{% if loop.first %}
+				    											{{name|slice(0,1)}}.&nbsp;
+				    										{% elseif loop.last %}
+				    											{{name}}
+				    										{% endif %}
+														{% endfor %}
+													{% else %}
+														{{lineup.player_name}}
+													{% endif %}
+												</a></span></div>
+											</div>
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% elseif lineup.posx == '4' %}
+								{% if midfield_home == '5' %}
+									{% for key, top in soccer_line.fifth %}
+										{% if key == lineup.posy %}
+											<div class="player line midfield home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif midfield_home == '4' %}
+									{% for key, top in soccer_line.fourth %}
+										{% if key == lineup.posy %}
+											<div class="player line midfield home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif midfield_home == '3' %}
+									{% for key, top in soccer_line.third %}
+										{% if key == lineup.posy %}
+											<div class="player line midfield home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif midfield_home == '2' %}
+									{% for key, top in soccer_line.second %}
+										{% if key == lineup.posy %}
+											<div class="player line midfield home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									{% for key, top in soccer_line.one %}
+										<div class="player line midfield home" style="top:{{top}}px">
+											<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+											<div class="player_name text-center">
+												<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+													{% set player_name_array = lineup.player_name|split(' ') %}
+													{% if player_name_array|length > 1 %}
+														{% for name in player_name_array %}
+				    										{% if loop.first %}
+				    											{{name|slice(0,1)}}.&nbsp;
+				    										{% elseif loop.last %}
+				    											{{name}}
+				    										{% endif %}
+														{% endfor %}
+													{% else %}
+														{{lineup.player_name}}
+													{% endif %}
+												</a></span></div>
+											</div>
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% elseif lineup.posx == '5' %}
+								{% if forward_home == '5' %}
+									{% for key, top in soccer_line.fifth %}
+										{% if key == lineup.posy %}
+											<div class="player line forward home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif forward_home == '4' %}
+									{% for key, top in soccer_line.fourth %}
+										{% if key == lineup.posy %}
+											<div class="player line forward home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif forward_home == '3' %}
+									{% for key, top in soccer_line.third %}
+										{% if key == lineup.posy %}
+											<div class="player line forward home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif forward_home == '2' %}
+									{% for key, top in soccer_line.second %}
+										{% if key == lineup.posy %}
+											<div class="player line forward home" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									{% for key, top in soccer_line.one %}
+										<div class="player line forward home" style="top:{{top}}px">
+											<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+											<div class="player_name text-center">
+												<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+													{% set player_name_array = lineup.player_name|split(' ') %}
+													{% if player_name_array|length > 1 %}
+														{% for name in player_name_array %}
+				    										{% if loop.first %}
+				    											{{name|slice(0,1)}}.&nbsp;
+				    										{% elseif loop.last %}
+				    											{{name}}
+				    										{% endif %}
+														{% endfor %}
+													{% else %}
+														{{lineup.player_name}}
+													{% endif %}
+												</a></span></div>
+											</div>
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% endif %}
+						{% else %}
+							{% if lineup.position == 'Goalkeeper' %}
+							<div class="player goalkeeper away">
+								<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+								<div class="player_name text-center">
+									<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+										{% set player_name_array = lineup.player_name|split(' ') %}
+										{% if player_name_array|length > 1 %}
+											{% for name in player_name_array %}
+					    						{% if loop.first %}
+					    							{{name|slice(0,1)}}.&nbsp;
+					    						{% elseif loop.last %}
+					    							{{name}}
+					    						{% endif %}
+											{% endfor %}
+										{% else %}
+											{{lineup.player_name}}
+										{% endif %}
+									</a></span></div>
+								</div>
+							</div>
+							{% elseif lineup.posx == '2' %}
+								{% if defense_away == '5' %}
+									{% for key, top in soccer_line.fifth %}
+										{% if key == lineup.posy %}
+											<div class="player line defense away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif defense_away == '4' %}
+									{% for key, top in soccer_line.fourth %}
+										{% if key == lineup.posy %}
+											<div class="player line defense away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif defense_away == '3' %}
+									{% for key, top in soccer_line.third %}
+										{% if key == lineup.posy %}
+											<div class="player line defense away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif defense_away == '2' %}
+									{% for key, top in soccer_line.second %}
+										{% if key == lineup.posy %}
+											<div class="player line defense away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									{% for key, top in soccer_line.one %}
+										<div class="player line defense away" style="top:{{top}}px">
+											<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+											<div class="player_name text-center">
+												<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+													{% set player_name_array = lineup.player_name|split(' ') %}
+													{% if player_name_array|length > 1 %}
+														{% for name in player_name_array %}
+				    										{% if loop.first %}
+				    											{{name|slice(0,1)}}.&nbsp;
+				    										{% elseif loop.last %}
+				    											{{name}}
+				    										{% endif %}
+														{% endfor %}
+													{% else %}
+														{{lineup.player_name}}
+													{% endif %}
+												</a></span></div>
+											</div>
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% elseif lineup.posx == '3' %}
+								{% if libero_away == '5' %}
+									{% for key, top in soccer_line.fifth %}
+										{% if key == lineup.posy %}
+											<div class="player line libero away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif libero_away == '4' %}
+									{% for key, top in soccer_line.fourth %}
+										{% if key == lineup.posy %}
+											<div class="player line libero away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif libero_away == '3' %}
+									{% for key, top in soccer_line.third %}
+										{% if key == lineup.posy %}
+											<div class="player line libero away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif libero_away == '2' %}
+									{% for key, top in soccer_line.second %}
+										{% if key == lineup.posy %}
+											<div class="player line libero away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									{% for key, top in soccer_line.one %}
+										<div class="player line libero away" style="top:{{top}}px">
+											<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+											<div class="player_name text-center">
+												<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+													{% set player_name_array = lineup.player_name|split(' ') %}
+													{% if player_name_array|length > 1 %}
+														{% for name in player_name_array %}
+				    										{% if loop.first %}
+				    											{{name|slice(0,1)}}.&nbsp;
+				    										{% elseif loop.last %}
+				    											{{name}}
+				    										{% endif %}
+														{% endfor %}
+													{% else %}
+														{{lineup.player_name}}
+													{% endif %}
+												</a></span></div>
+											</div>
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% elseif lineup.posx == '4' %}
+								{% if midfield_away == '5' %}
+									{% for key, top in soccer_line.fifth %}
+										{% if key == lineup.posy %}
+											<div class="player line midfield away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif midfield_away == '4' %}
+									{% for key, top in soccer_line.fourth %}
+										{% if key == lineup.posy %}
+											<div class="player line midfield away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif midfield_away == '3' %}
+									{% for key, top in soccer_line.third %}
+										{% if key == lineup.posy %}
+											<div class="player line midfield away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif midfield_away == '2' %}
+									{% for key, top in soccer_line.second %}
+										{% if key == lineup.posy %}
+											<div class="player line midfield away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									{% for key, top in soccer_line.one %}
+										<div class="player line midfield away" style="top:{{top}}px">
+											<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+											<div class="player_name text-center">
+												<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+													{% set player_name_array = lineup.player_name|split(' ') %}
+													{% if player_name_array|length > 1 %}
+														{% for name in player_name_array %}
+				    										{% if loop.first %}
+				    											{{name|slice(0,1)}}.&nbsp;
+				    										{% elseif loop.last %}
+				    											{{name}}
+				    										{% endif %}
+														{% endfor %}
+													{% else %}
+														{{lineup.player_name}}
+													{% endif %}
+												</a></span></div>
+											</div>
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% elseif lineup.posx == '5' %}
+								{% if forward_away == '5' %}
+									{% for key, top in soccer_line.fifth %}
+										{% if key == lineup.posy %}
+											<div class="player line forward away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif forward_away == '4' %}
+									{% for key, top in soccer_line.fourth %}
+										{% if key == lineup.posy %}
+											<div class="player line forward away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif forward_away == '3' %}
+									{% for key, top in soccer_line.third %}
+										{% if key == lineup.posy %}
+											<div class="player line forward away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% elseif forward_away == '2' %}
+									{% for key, top in soccer_line.second %}
+										{% if key == lineup.posy %}
+											<div class="player line forward away" style="top:{{top}}px">
+												<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+												<div class="player_name text-center">
+													<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+														{% set player_name_array = lineup.player_name|split(' ') %}
+														{% if player_name_array|length > 1 %}
+															{% for name in player_name_array %}
+					    										{% if loop.first %}
+					    											{{name|slice(0,1)}}.&nbsp;
+					    										{% elseif loop.last %}
+					    											{{name}}
+					    										{% endif %}
+															{% endfor %}
+														{% else %}
+															{{lineup.player_name}}
+														{% endif %}
+													</a></span></div>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									{% for key, top in soccer_line.one %}
+										<div class="player line forward away" style="top:{{top}}px">
+											<div class="shirt_number text-center">{{lineup.shirt_number}}</div>
+											<div class="player_name text-center">
+												<div><span><a class="new-tab" href ="/jogador/{{lineup.player_name|replace({' ':'-'})}}/{{lineup.player_id}}">
+													{% set player_name_array = lineup.player_name|split(' ') %}
+													{% if player_name_array|length > 1 %}
+														{% for name in player_name_array %}
+				    										{% if loop.first %}
+				    											{{name|slice(0,1)}}.&nbsp;
+				    										{% elseif loop.last %}
+				    											{{name}}
+				    										{% endif %}
+														{% endfor %}
+													{% else %}
+														{{lineup.player_name}}
+													{% endif %}
+												</a></span></div>
+											</div>
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+		{% endif %}
+		{% if match.lineup.data %}
+		{% set positions = {'Goalkeeper':'Goleiro','Defender':'Defensor','CD-L':'Defensor','CD-R':'Defensor','RB':'Defensor','LB':'Defensor','AM':'Meio-Campo','LM':'Meio-Campo','RM':'Meio-Campo','CM-L':'Meio-Campo','CM-R':'Meio-Campo','CM-R':'Meio-Campo','CM':'Meio-Campo','A':'Atacante','CF-L':'Atacante','CF-R':'Atacante','CF':'Atacante','LF':'Atacante','RF':'Atacante','Forward':'Atacante'} %}
+		<div class="competition-title text-center">Titulares</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="col-xs-6 nopadding home team-headlines">
+					{% for lineup in match.lineup.data %}
+						{% if lineup.team_id == match.home_team_id and lineup.type != 'substitution' %}
+							<div class="col-xs-12 nopadding text-left">
+								&nbsp;&nbsp;{% if lineup.shirt_number < 10 %}0{% endif %}{{lineup.shirt_number}}&nbsp;&nbsp; {{lineup.player_name}} ({{lineup.position|replace(positions)}})
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+				<div class="col-xs-6 nopadding away team-headlines">
+					{% for lineup in match.lineup.data %}
+						{% if lineup.team_id == match.away_team_id and lineup.type != 'substitution' %}
+							<div class="col-xs-12 nopadding text-right">
+								({{ lineup.position|replace(positions)}}) {{lineup.player_name}} &nbsp;&nbsp;{% if lineup.shirt_number < 10 %}0{% endif %}{{lineup.shirt_number}}&nbsp;&nbsp;
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="competition-title text-center">Reservas</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="col-xs-6 nopadding home team-headlines">
+					{% for lineup in match.lineup.data %}
+						{% if lineup.team_id == match.home_team_id and lineup.type == 'substitution' %}
+							<div class="col-xs-12 nopadding text-left">
+								&nbsp;&nbsp;{% if lineup.shirt_number < 10 %}0{% endif %}{{lineup.shirt_number}}&nbsp;&nbsp; {{lineup.player_name}}
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+				<div class="col-xs-6 nopadding away team-headlines">
+					{% for lineup in match.lineup.data %}
+						{% if lineup.team_id == match.away_team_id and lineup.type == 'substitution' %}
+							<div class="col-xs-12 nopadding text-right">
+								{{lineup.player_name}} &nbsp;&nbsp;{% if lineup.shirt_number < 10 %}0{% endif %}{{lineup.shirt_number}}&nbsp;&nbsp;
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% else %}
+		<div class="row nomarginlaterals"><div class="col-xs-12 text-center"><br />Ainda não possuíamos os dados destas equipes.</div></div>
+		{% endif %}
+	</div>
+</div>

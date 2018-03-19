@@ -1,0 +1,221 @@
+<div class="row">
+	<div class="container-fluid">
+	{% if match.status != 'NS' %}
+		<div class="row">
+			<div class="col-xs-12 menu-home match-tabs stats-tabs">
+				<div class="button pull-left match active">{% if match.status == 'HT' %}1º Tempo{% else %}Jogo{% endif %}</div>
+				<!--<div class="button pull-left fisrt-time">1º Tempo</div>
+				<div class="button pull-left second-time">2º Tempo</div>-->
+			</div>
+		</div>
+		<div class="competition-title line nomargin">&nbsp;</div>
+		<div class="row">
+			<div class="col-xs-12 match-stats">
+			{% if match.homeStats and match.awayStats %}
+			    {% if match.homeStats.possesion == 0 and match.awayStats.possesion == 0 %}
+			    	{% set total_possesion = 1 %}
+				{% else %}
+					{% set total_possesion = match.homeStats.possesion + match.awayStats.possesion %}
+				{% endif %}
+			   	{% set width_percent_home = ((match.homeStats.possesion / total_possesion)*100) %}
+				{% set width_percent_away = ((match.awayStats.possesion / total_possesion)*100) %}	
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.possesion}}%</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.possesion == 0%}transparent{% elseif match.homeStats.possesion > match.awayStats.possesion or match.homeStats.possesion == match.awayStats.possesion %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Posse de Bola</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.possesion == 0%}transparent{% elseif match.awayStats.possesion > match.homeStats.possesion or match.awayStats.possesion == match.homeStats.possesion %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.possesion}}%&nbsp;</div>
+				</div>
+				{% if match.homeStats.shots_total == 0 and match.awayStats.shots_total == 0 %}
+			    	{% set total_shots_total = 1 %}
+				{% else %}
+					{% set total_shots_total = match.homeStats.shots_total + match.awayStats.shots_total %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.shots_total / total_shots_total)*100) %}
+				{% set width_percent_away = ((match.awayStats.shots_total / total_shots_total)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.shots_total}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.shots_total == 0%}transparent{% elseif match.homeStats.shots_total > match.awayStats.shots_total or match.homeStats.shots_on_target == match.awayStats.shots_on_target %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Finaliza&ccedil;&otilde;es</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.shots_total == 0 %}transparent{% elseif match.awayStats.shots_total > match.homeStats.shots_total or match.awayStats.shots_total == match.homeStats.shots_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.shots_total}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.shots_on_target == 0 and match.awayStats.shots_on_target == 0 %}
+			    	{% set total_shots_on_target = 1 %}
+				{% else %}
+					{% set total_shots_on_target = match.homeStats.shots_on_target + match.awayStats.shots_on_target %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.shots_on_target / total_shots_on_target)*100) %}
+				{% set width_percent_away = ((match.awayStats.shots_on_target / total_shots_on_target)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.shots_on_target}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.shots_on_target == 0%}transparent{% elseif match.homeStats.shots_on_target > match.awayStats.shots_on_target or match.homeStats.shots_on_target == match.awayStats.shots_on_target %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Chutes ao Gol</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.shots_on_target == 0 %}transparent{% elseif match.awayStats.shots_on_target > match.homeStats.shots_on_target or match.awayStats.shots_on_target == match.homeStats.shots_on_target %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.shots_on_target}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.shots_off_target == 0 and match.awayStats.shots_off_target == 0 %}
+			    	{% set total_shots_off_target = 1 %}
+				{% else %}
+					{% set total_shots_off_target = match.homeStats.shots_off_target + match.awayStats.shots_off_target %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.shots_off_target / total_shots_off_target)*100) %}
+				{% set width_percent_away = ((match.awayStats.shots_off_target / total_shots_off_target)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.shots_off_target}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.shots_off_target == 0%}transparent{% elseif match.homeStats.shots_off_target > match.awayStats.shots_off_target or match.homeStats.shots_off_target == match.awayStats.shots_off_target %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Chutes para Fora</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.shots_off_target == 0 %}transparent{% elseif match.awayStats.shots_off_target > match.homeStats.shots_off_target or match.awayStats.shots_off_target == match.homeStats.shots_off_target %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.shots_off_target}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.fouls_total == 0 and match.awayStats.fouls_total == 0 %}
+			    	{% set total_fouls_total = 1 %}
+				{% else %}
+					{% set total_fouls_total = match.homeStats.fouls_total + match.awayStats.fouls_total %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.fouls_total / total_fouls_total)*100) %}
+				{% set width_percent_away = ((match.awayStats.fouls_total / total_fouls_total)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.fouls_total}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.fouls_total == 0%}transparent{% elseif match.homeStats.fouls_total > match.awayStats.fouls_total or match.homeStats.fouls_total == match.awayStats.fouls_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Faltas</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.fouls_total == 0 %}transparent{% elseif match.awayStats.fouls_total > match.homeStats.fouls_total or match.awayStats.fouls_total == match.homeStats.fouls_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.fouls_total}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.corners_total == 0 and match.awayStats.corners_total == 0 %}
+			    	{% set total_corners_total = 1 %}
+				{% else %}
+					{% set total_corners_total = match.homeStats.corners_total + match.awayStats.corners_total %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.corners_total / total_corners_total)*100) %}
+				{% set width_percent_away = ((match.awayStats.corners_total / total_corners_total)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.corners_total}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.corners_total == 0%}transparent{% elseif match.homeStats.corners_total > match.awayStats.corners_total or match.homeStats.corners_total == match.awayStats.corners_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Escanteios</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.corners_total == 0 %}transparent{% elseif match.awayStats.corners_total > match.homeStats.corners_total or match.awayStats.corners_total == match.homeStats.corners_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.corners_total}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.offsides_total == 0 and match.awayStats.offsides_total == 0 %}
+			    	{% set total_offsides_total = 1 %}
+				{% else %}
+					{% set total_offsides_total = match.homeStats.offsides_total + match.awayStats.offsides_total %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.offsides_total / total_offsides_total)*100) %}
+				{% set width_percent_away = ((match.awayStats.offsides_total / total_offsides_total)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.offsides_total}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.offsides_total == 0%}transparent{% elseif match.homeStats.offsides_total > match.awayStats.offsides_total or match.homeStats.offsides_total == match.awayStats.offsides_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Impedimentos</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.offsides_total == 0 %}transparent{% elseif match.awayStats.offsides_total > match.homeStats.offsides_total or match.awayStats.offsides_total == match.homeStats.offsides_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.offsides_total}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.saves == 0 and match.awayStats.saves == 0 %}
+			    	{% set total_saves = 1 %}
+				{% else %}
+					{% set total_saves = match.homeStats.saves + match.awayStats.saves %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.saves / total_saves)*100) %}
+				{% set width_percent_away = ((match.awayStats.saves / total_saves)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.saves}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.saves == 0%}transparent{% elseif match.homeStats.saves > match.awayStats.saves or match.homeStats.saves == match.awayStats.saves %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Defesas do Goleiro</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.saves == 0 %}transparent{% elseif match.awayStats.saves > match.homeStats.saves or match.awayStats.saves == match.homeStats.saves %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.saves}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.yellowcards == 0 and match.awayStats.yellowcards == 0 %}
+			    	{% set total_yellowcards = 1 %}
+				{% else %}
+					{% set total_yellowcards = match.homeStats.yellowcards + match.awayStats.yellowcards %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.yellowcards / total_yellowcards)*100) %}
+				{% set width_percent_away = ((match.awayStats.yellowcards / total_yellowcards)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.yellowcards}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.yellowcards == 0%}transparent{% elseif match.homeStats.yellowcards > match.awayStats.yellowcards or match.homeStats.yellowcards == match.awayStats.yellowcards %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Cartões Amarelos</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.yellowcards == 0 %}transparent{% elseif match.awayStats.yellowcards > match.homeStats.yellowcards or match.awayStats.yellowcards == match.homeStats.yellowcards %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.yellowcards}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.redcards == 0 and match.awayStats.redcards == 0 %}
+			    	{% set total_redcards = 1 %}
+				{% else %}
+					{% set total_redcards = match.homeStats.redcards + match.awayStats.redcards %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.redcards / total_redcards)*100) %}
+				{% set width_percent_away = ((match.awayStats.redcards / total_redcards)*100) %}
+				<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.redcards}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.redcards == 0%}transparent{% elseif match.homeStats.redcards > match.awayStats.redcards or match.homeStats.redcards == match.awayStats.redcards %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Cartões Vermelhos</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.redcards == 0 %}transparent{% elseif match.awayStats.redcards > match.homeStats.redcards or match.awayStats.redcards == match.homeStats.redcards %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.redcards}}&nbsp;</div>
+				</div>
+				{% if match.homeStats.throw_in_total == 0 and match.awayStats.throw_in_total == 0 %}
+			    	{% set total_throw_in_total = 1 %}
+				{% else %}
+					{% set total_throw_in_total = match.homeStats.throw_in_total + match.awayStats.throw_in_total %}
+				{% endif %}
+				{% set width_percent_home = ((match.homeStats.throw_in_total / total_throw_in_total)*100) %}
+				<!--<div class="row nomarginlaterals">
+					<div class="col-xs-1 text-left nopaddingleft">&nbsp;{{match.homeStats.throw_in_total}}</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-right {% if match.homeStats.throw_in_total == 0 %}transparent{% elseif match.homeStats.throw_in_total > match.awayStats.throw_in_total or match.homeStats.throw_in_total == match.awayStats.throw_in_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_home}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-2 title nopadding">Arremessos Laterais</div>
+					<div class="col-xs-4 nopadding">
+						<div class="col-xs-12 nopadding percent-bar pull-left {% if match.awayStats.throw_in_total == 0 %}transparent{% elseif match.awayStats.throw_in_total > match.homeStats.throw_in_total or match.awayStats.throw_in_total == match.homeStats.throw_in_total %}gray{% else %}red{% endif %}" style="width:{{width_percent_away}}%">&nbsp;</div>
+					</div>
+					<div class="col-xs-1 text-right nopaddingright">{{match.awayStats.throw_in_total}}&nbsp;</div>
+				</div>-->
+			{% else %}
+				<div class="row nomarginlaterals"><div class="col-xs-12 text-center">Nenhuma estatística encontrada.</div></div>
+			{% endif %}
+			</div>
+		</div>
+	{% else %}
+		<div class="row text-center"><br /><br />Partida não iniciada. Não há estatísticas.</div>
+	{% endif %}
+	</div>
+</div>

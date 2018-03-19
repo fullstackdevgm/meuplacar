@@ -1,0 +1,17 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+#Arquivos de cache e sessions
+storage/framework/cache/
+storage/framework/sessions/
+storage/cms/cache/
+storage/cms/twig/
+plugins/offline/sitesearch/
+
+.DS_Store
+*.log
+
+.settings/com.aptana.editor.php.prefs
+.ssh
+.project

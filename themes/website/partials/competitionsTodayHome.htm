@@ -1,0 +1,90 @@
+{% if matches %}
+<div class="competitions">
+	{% set activeIdCompetition = 0 %}
+	{% for match in matches %}
+	{% if match.status != 'DELETED' and match.status != 'POSTP' and match.status != 'SUSP' %}
+	{% if activeIdCompetition != match.competition_id %}
+	<div class="col-xs-12 competition-title text-left" data-id="{{match.competition_id}}">
+		<img title="{{match.competition_country_name}}" src="{{match.competition_country_flag}}" />&nbsp;&nbsp;{{match.competition_name}} <a href="competicao/{{match.competition_id}}/{{match.season_id}}" class="pull-right competition-ranking">Classifica&ccedil;&atilde;o</a>
+	</div>
+	{% set activeIdCompetition = match.competition_id %}
+	{% endif %}
+	<!--<a href="#" class="no-link" data-toggle="modal" data-target="#matchModal" data-id="{{match.match_id}}">-->
+	<a href="/jogo/{{match.match_id}}" target="_blank" class="no-link new-window" data-id="{{match.match_id}}">
+		<div class="col-xs-12 line-match {% if match.status != 'FT' %}not-fineshed{% endif %} {% if match.status != 'LIVE' %}not-live{% endif %} {% if match.status != 'NS' %}started{% endif %}" data-competition-id="{{match.competition_id}}">
+			<div class="row hidden-xs hidden-sm">
+				<div class="col-xs-2 nopaddingleft">
+					<div class="col-xs-4 info">{% if match.status == 'CANCL' %}<del>{{match.starting_time}}</del>{% else %}{{match.starting_time}}{% endif %}</div>
+					<div class="col-xs-1 space">&nbsp;</div>
+					<div class="col-xs-7 info {% if match.status == 'HT' or match.status == 'LIVE' %}live-letter{% endif %}">
+						{% if match.status == 'NS' %}<span></span>
+						{% elseif match.status == 'FT' or match.status == 'AET' or match.status == 'FT_PEN' %}<span class="fineshed-letter">Encerrado</span>
+						{% elseif match.status == 'HT' %}<span class="live-letter">Intervalo</span>
+						{% elseif match.status == 'CANCL' %}<span class="fineshed-letter">Cancelado</span>
+						{% else %}
+						<span class="live-letter">{{match.minute}}{% if match.extra_minute != 0 %}+{{match.extra_minute}}{% endif %}'</span>
+						{% endif %}
+					</div>
+				</div>
+				<div class="col-xs-8">
+					<div class="col-xs-4 team nopadding text-right">
+						<span class="pull-right">{{match.home_team_name}}</span>
+						{% for i in 1..match.home_team_redcard if match.home_team_redcard >= 1 %}
+						<span class="red-card right pull-right"></span>
+						{% endfor %}
+					</div>
+					<div class="col-xs-4">
+						<div class="pull-left team-logo team-logo-home"><img src="{{match.home_team_logo}}" /></div>
+						<div class="pull-left team-home-score info {% if match.home_score == '1' %}score-one{% endif %}" >
+							{% if match.status == 'NS' %}-{% else %}{{match.home_score}}{% endif %}
+						</div>
+						<div class="pull-right team-logo team-logo-away"><img src="{{match.away_team_logo}}" /></div>
+						<div class="pull-right team-away-score info {% if match.away_score == '1' %}score-one{% endif %}">
+							{% if match.status == 'NS' %}-{% else %}{{match.away_score}}{% endif %}
+						</div>
+					</div>
+					<div class="col-xs-4 team nopadding text-left">
+						<span class="pull-left">{{match.away_team_name}}</span>
+						{% for i in 1..match.away_team_redcard if match.away_team_redcard >= 1 %}
+						<span class="red-card left pull-left"></span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-xs-2 nopaddingright">
+					<div class="col-xs-2 info video"><i class="fa fa-play" aria-hidden="true"></i></div>
+					<div class="col-xs-1 space"></div>
+					<div class="col-xs-9 odds"><a href="/odd/{{match.match_id}}" target="_blank" class="no-link new-window" data-toggle="modal" data-target="#matchModal" data-id="{{match.match_id}}">Odds</a></div>
+				</div>
+			</div>
+			<div class="row mobile visible-xs visible-sm {% if match.status != 'NS' and match.status != 'FT' and match.status != 'AET' and match.status != 'FT_PEN' and match.status != 'HT' and  match.status != 'CANCL' %} live{% endif %}">
+				<div class="col-xs-2 status nopaddingleft">
+					{% if match.status == 'NS' or match.status == 'FT' or match.status == 'AET' or match.status == 'FT_PEN' or match.status == 'HT' or  match.status == 'CANCL' %}
+					{{match.status}}
+					{% else %}
+					<span class="live-letter">{{match.minute}}{% if match.extra_minute != 0 %}+{{match.extra_minute}}{% endif %}'</span>
+					{% endif %}
+				</div>
+				<div class="col-xs-10">
+					<div class="col-xs-12 nopadding home_team text-left">
+						{{match.home_team_name}}
+						<span class="pull-right score">{% if match.status == 'NS' %}?{% else %}{{match.home_score}}{% endif %}</span>
+					</div>
+					<div class="col-xs-12 nopadding text-left">
+						{{match.away_team_name}}
+						<span class="pull-right score">{% if match.status == 'NS' %}?{% else %}{{match.away_score}}{% endif %}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</a>
+	{% endif %}
+	{% endfor %}
+</div>
+<div class="tab-empty hide text-center">
+	<br /><br /><h3></h3><br />
+	<img src="themes/website/assets/images/google970example.png" />
+</div>
+{% else %}
+<br /><br />
+<h2>Nenhuma partida sendo disputada hoje.</h2>
+{% endif %}

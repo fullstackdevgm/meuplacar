@@ -1,0 +1,36 @@
+[menu]
+start = "id-1"
+activeNode = "0"
+listItemClasses = ""
+primaryClasses = ""
+secondaryClasses = ""
+numberOfLevels = 2
+==
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-md-6 col-lg-6">
+			<a href="{{ 'home'|page }}" class="hidden-xs hidden-sm">
+				<h1 class="pull-left title-site text-uppercase">Meu Placar</h1>
+				<img src="{{ 'assets/images/logo.png'|theme }}" class="pull-left" />
+			</a>
+			<div class="row visible-xs visible-sm">
+				<div class="col-xs-8 text-right"><h1 class="title-site text-uppercase">Meu Placar</h1></div>
+				<div class="col-xs-4 nopaddingleft text-left"><img class="logo-img" src="{{ 'assets/images/logo.png'|theme }}" /></div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-6 col-lg-6">
+			<!-- <div class="header-search">
+				<i class="fa fa-2x fa-search pull-right"></i>
+				<input type="text" class="input-underline pull-right" name="search-content" id="search-content" />
+			</div> -->
+		</div>
+	</div>
+	<div class="row">
+		<div id="main-menu">
+			{% component "menu" %}
+			<ul>
+				<li class="pull-right icon" title="Logar com Facebook"><i class="fa fa-2x fa-facebook-official"></i></li>
+			</ul>
+		</div>
+	</div>
+</div>

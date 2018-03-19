@@ -1,0 +1,76 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        max_image_width:
+            label: planetadeleste.widgets::lang.widget.settings.max_image_width
+            comment: planetadeleste.widgets::lang.widget.settings.max_image_comment
+            span: left
+            type: number
+            tab: planetadeleste.widgets::lang.widget.autosize.name
+
+        max_image_height:
+            label: planetadeleste.widgets::lang.widget.settings.max_image_height
+            comment: planetadeleste.widgets::lang.widget.settings.max_image_comment
+            span: right
+            type: number
+            tab: planetadeleste.widgets::lang.widget.autosize.name
+
+        models:
+            label: planetadeleste.widgets::lang.widget.settings.autosize_models
+            comment: planetadeleste.widgets::lang.widget.settings.autosize_models_comment
+            span: left
+            type: checkboxlist
+            tab: planetadeleste.widgets::lang.widget.autosize.name
+
+        autosize_doc:
+            label: planetadeleste.widgets::lang.widget.settings.documentation
+            type: section
+            tab: planetadeleste.widgets::lang.widget.autosize.name
+
+        autosize_doc_partial:
+            type: partial
+            path: $/planetadeleste/widgets/partials/_autosize_doc.htm
+            tab: planetadeleste.widgets::lang.widget.autosize.name
+
+        modal_doc:
+            label: planetadeleste.widgets::lang.widget.settings.documentation
+            type: section
+            tab: planetadeleste.widgets::lang.widget.modal.name
+
+        modal_doc_partial:
+            type: partial
+            path: $/planetadeleste/widgets/partials/_modal_doc.htm
+            tab: planetadeleste.widgets::lang.widget.modal.name
+
+        button_doc:
+            label: planetadeleste.widgets::lang.widget.settings.documentation
+            type: section
+            tab: planetadeleste.widgets::lang.widget.button.name
+
+        button_doc_partial:
+            type: partial
+            path: $/planetadeleste/widgets/partials/_button_doc.htm
+            tab: planetadeleste.widgets::lang.widget.button.name
+
+        mappicker_doc:
+            label: planetadeleste.widgets::lang.widget.settings.documentation
+            type: section
+            tab: planetadeleste.widgets::lang.widget.mappicker.name
+
+        mappicker_doc_partial:
+            type: partial
+            path: $/planetadeleste/widgets/partials/_mappicker_doc.htm
+            tab: planetadeleste.widgets::lang.widget.mappicker.name
+
+        numbertoword_doc:
+            label: planetadeleste.widgets::lang.widget.settings.documentation
+            type: section
+            tab: planetadeleste.widgets::lang.widget.numbertoword.name
+
+        numbertoword_doc_partial:
+            type: partial
+            path: $/planetadeleste/widgets/partials/_numbertoword_doc.htm
+            tab: planetadeleste.widgets::lang.widget.numbertoword.name

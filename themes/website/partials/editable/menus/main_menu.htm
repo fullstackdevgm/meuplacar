@@ -1,0 +1,24 @@
+{% if competition.name == 'Champions League' %}
+{% content 'main_menu.htm' box_content = [
+
+    {name:'Champions League',competition_id:'11',season_id:'738', isactive:'active'},
+    {name:'Premier League',competition_id:'29', season_id:'651', isactive:''},
+
+] %}
+{% elseif competition.name == 'Premier League' %}
+{% content 'main_menu.htm' box_content = [
+
+    {name:'Champions League',competition_id:'11',season_id:'738', isactive:''},
+    {name:'Premier League',competition_id:'29', season_id:'651', isactive:'active'},
+
+] %}
+{% else %}
+{% content 'main_menu.htm' box_content = [
+
+    {name:'Champions League',competition_id:'11',season_id:'738', isactive:''},
+    {name:'Premier League',competition_id:'29', season_id:'651', isactive:''},
+
+] %}
+{% endif %}
+
+<!-- Campos: "link" é a página de destino e "name" o nome que aparecerá no menu -->
